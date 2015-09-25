@@ -1,0 +1,23 @@
+{
+  "name": "xmr",
+  "version": "1.0.0",
+  "description": "Exam study tool",
+  "private": true,
+  "main": "backend.js",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "cookie-parser": "^1.4.0",
+    "morgan": "^1.6.1",
+    "path": "^0.12.7",
+    "sequelize": "^3.9.0",
+    "sequelize-cli": "^1.9.1",
+    "serve-favicon": "^2.3.0",
+    "sqlite3": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bengt Ericsson",
+  "license": "SEE LICENSE IN LICENSE"
+}
