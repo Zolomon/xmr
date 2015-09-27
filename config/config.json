@@ -4,11 +4,18 @@
         "password": null,
         "name": "zolomon",
         "database": "courses",
-        "storage": "data/data.db",
+        "storage": "./data/data.db",
         "host": "127.0.0.1",
         "dialect": "sqlite",
         "options": {
             "omitNull": true
+        },
+        "rpc": {
+            "port": 3000,
+            "hostname": "localhost"
+        },
+        "webserver": {
+            "port": 6006
         }
     },
     "test": {
@@ -19,6 +26,13 @@
         "dialect": "mysql",
         "options": {
             "omitNull": true
+        },
+        "rpc": {
+            "port": 3000,
+            "hostname": "localhost"
+        },
+        "webserver": {
+            "port": 6006
         }
     },
     "production": {
@@ -29,6 +43,13 @@
         "dialect": "mysql",
         "options": {
             "omitNull": true
+        },
+        "rpc": {
+            "port": 3000,
+            "hostname": "localhost"
+        },
+        "webserver": {
+            "port": 6006
         }
     }
 }

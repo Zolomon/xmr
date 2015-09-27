@@ -1,27 +1,28 @@
-var models = require('../models');
-var express = require('express');
-var router = express.Router();
+var //models = require('../models'),
+express = require('express'),
+    router = express.Router(),
+    jayson = require('jayson'),
+    Promise = require('bluebird'),
+    env = process.env.NODE_ENV || "development",    
+    config = require('../config/config.json')[env],    
+    client = jayson.client.http({port: config.rpc.port, hostname: config.rpc.hostname});
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    models.Course.findAll({
-        include: [{
-            model: models.Exam,
-            include: [{
-                model: models.Problem,
-                include: [{
-                    model: models.Answer
-                }, {
-                    model: models.Question
-                }]
-            }]
-        }]
-    }).success(function(courses) {
-        console.log(courses);
-        res.render('index', {
-            title: 'Xmr',
-            courses: courses
+    new Promise(function(resolve, reject) { 
+        client.request('getAllCourses', [], function(err, error, response) {            
+            if(err) {
+                reject(err);
+            }
+            else {
+                console.log(response);
+                resolve(response);
+            }
         });
+    }).then(function(response) {
+        res.send(response);
+    }).catch(function(err) {
+        res.send(err);
     });
 });
 
