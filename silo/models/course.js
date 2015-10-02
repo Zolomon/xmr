@@ -8,8 +8,8 @@
         }, {
             classMethods: {
                 associate: function(models) {
-                    // Course.hasMany(models.Exam);
-                    // Course.hasMany(models.Tag);
+                    Course.hasMany(models.Exam);
+                    Course.hasMany(models.Tag);
                 }
             }
         });
