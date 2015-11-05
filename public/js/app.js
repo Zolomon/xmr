@@ -21,7 +21,7 @@
                                        },200);
                                        return debounceFn;
                                    }
-                                   
+
                                    $scope.toggleLeft = buildToggler('left');
                                }]);
 
@@ -35,16 +35,20 @@
                                             });
                                     };
                                 }]);
-    
+
     xmr.config(function ($routeProvider) {
         $routeProvider
             .when('/courses', {
                 templateUrl: 'js/views/courses.html',
                 controller: 'CourseController'
             })
-            .when('/course/:id', {
+            .when('/courses/:id', {
                 templateUrl: 'js/views/course.html',
                 controller: 'CourseController'
+            })
+            .when('/courses/:course_id/exam/:exam_id', {
+                templateUrl: 'js/views/exam.html',
+                controller: 'ExamController'
             })
             .otherwise({
                 redirectTo: '/courses'

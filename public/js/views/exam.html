@@ -1,0 +1,37 @@
+<md-content class="md-padding">
+    <!-- <md-card> -->
+    <!-- <md-card-content> -->
+    <h1 class="md-title">Course '{{course.name}}'</h1>
+    <h2 class="md-title">Exam '{{exam.code}}'</h2>
+    <md-content>
+        <md-list layout="column">
+            <md-list-item class="md-1-line" ng-repeat="problem in exam.Problems">
+                <md-card style="min-width: 50%">
+                    <md-card-content>
+
+                        <div layout="row">
+                            <md-content layout="row">
+                                <md-subheader class="md-no-sticky">Tags</md-subheader>
+
+                                <a ng-repeat="tag in problem.TagLinks"
+                                   ng-href="#/tag/{{tag.id}}"
+                                   class="md-button md-raised">
+                                    {{tag.title}}
+                                </a>
+
+                            </md-content>
+                        </div>
+                        <md-button
+                            class="md-primary md-raised"
+                            style="float: right"
+                            ng-href="#/problem/{{problem.id}}">
+                            Solve problem #{{problem.index + 1}}
+                        </md-button>
+                    </md-card-content>
+                </md-card>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <!-- </md-card-content> -->
+    <!-- </md-card> -->
+</md-content>

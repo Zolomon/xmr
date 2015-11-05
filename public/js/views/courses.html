@@ -1,25 +1,15 @@
-<ul id="courses">
-    <li ng-repeat="course in courses">
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp" ng-hide="data.error">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">{{course.code}}</h2>
-            </div>
-            <div class="mdl-card__supporting-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Mauris sagittis pellentesque lacus eleifend lacinia...
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                    Get Started
-                </a>
-            </div>
-            <div class="mdl-card__menu">
-                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                    <i class="material-icons">share</i>
-                </button>
-            </div>
-        </div>
-    </li>
-</ul>
-<a href="#/main">Back to search</a>
+<md-content class="md-padding">
 
+    <md-card ng-repeat="course in courses">
+        <md-card-content>
+            <h2 class="md-title">{{course.code}}</h2>
+            <p>
+                {{course.name}}
+            </p>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button ng-href="#/courses/{{course.id}}">Start</md-button>
+        </div>
+    </md-card>
+</md-content>
+<a href="#/main">Back to search</a>

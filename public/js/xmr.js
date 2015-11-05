@@ -1,5 +1,12 @@
 (function () {
     var xmr = function($http) {
+        var getExam = function(id) {
+            return $http.get('/api/exams/' + id)
+                .then(function (response) {
+                    return response.data;
+                });
+        };
+
         var getCourses = function () {
             return $http.get("/api/courses")
                 .then(function (response) {
@@ -8,11 +15,11 @@
         };
 
         var getCourse = function(id) {
-            return $http.get("/api/course/" + id)
+            return $http.get("/api/courses/" + id)
                 .then(function (response) {
                     return response.data;
                 });
-        }
+        };
 
         // var getRepoDetails = function(username, reponame) {
         //     var repo;
@@ -30,9 +37,10 @@
         // };
 
         return {
+            getExam: getExam,
             getCourses: getCourses,
             getCourse: getCourse
-        };    
+        };
     };
 
     var module = angular.module("xmr");
