@@ -1,3 +1,4 @@
+/*eslint no-console: 0*/
 var express = require('express'),
     router = express.Router(),
     jayson = require('jayson'),
@@ -63,7 +64,7 @@ router.get('/api/tags/:tag_slug', (req, res) => {
         .catch(err => res.send(err));    
 });
 
-router.get('/api/courses/:course_id/exams/:exam_id/problems/:problem_id', (req, res) => {
+router.get('/api/problems/:problem_id', (req, res) => {
     new Promise((resolve, reject) => {
         client.request('getProblem', [req.params.problem_id], (err, error, response) => {
             if (err) {
@@ -73,7 +74,10 @@ router.get('/api/courses/:course_id/exams/:exam_id/problems/:problem_id', (req, 
             }
         });        
     })
-        .then(response => res.send(response))
+        .then(response => {
+            console.log(response);
+            res.send(response);
+        })
         .catch(err => res.send(err));
 });
 

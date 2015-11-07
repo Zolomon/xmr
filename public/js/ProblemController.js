@@ -15,5 +15,5 @@
         }
     };
 
-    app.Controller('ProblemController', ['$scope', '$routeParams', 'xmr', ProblemController]);
+    app.controller('ProblemController', ['$scope', '$routeParams', 'xmr', ProblemController]);
 }());

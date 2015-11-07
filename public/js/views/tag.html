@@ -5,7 +5,7 @@
 <div ng-repeat="course in tag.course">
     <ul ng-repeat="exam in course.Exams" class="inline-list">
         <li ng-repeat="problem in exam.Problems" class="inline-list">
-            <a href="#/courses/{{tag.course[0].id}}/exam/{{exam.id}}/problems/{{problem.id}}">{{problem.id}}</a>
+            <a href="#/courses/{{tag.course[0].id}}/exams/{{exam.id}}/problems/{{problem.id}}">{{problem.id}}</a>
             &nbsp;
         </li>
     </ul>

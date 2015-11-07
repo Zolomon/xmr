@@ -1,33 +1,26 @@
 /*global angular*/
 (function () {
-    var xmr = function($http) {
-        var getExam = function(id) {
-            return $http.get('/api/exams/' + id)
-                .then(function (response) {
-                    return response.data;
-                });
-        };
+    var xmr = ($http) => {
+        var getExam = id =>
+            $http.get('/api/exams/' + id)
+            .then( response =>response.data);
+        
 
-        var getCourses = function () {
-            return $http.get('/api/courses')
-                .then(function (response) {
-                    return response.data;
-                });
-        };
+        var getCourses = () => 
+            $http.get('/api/courses')
+            .then(response => response.data);
 
-        var getCourse = function(id) {
-            return $http.get('/api/courses/' + id)
-                .then(function (response) {
-                    return response.data;
-                });
-        };
+        var getCourse = id =>
+            $http.get('/api/courses/' + id)
+            .then(response =>response.data);
+        
 
         var getProblemsWithTag = tag_slug => 
             $http.get('/api/tags/' + tag_slug)
             .then(response => response.data);
 
         var getProblem = id => 
-            $http.get('/api/problem/' + id)
+            $http.get('/api/problems/' + id)
             .then(response => response.data);        
 
         return {

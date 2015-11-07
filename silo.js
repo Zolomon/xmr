@@ -10,8 +10,8 @@ var include = require('./includes.js');
 
 var server = jayson.server({
 
-    getExam: function(id, callback) {
-        new Promise(function(resolve, _) {
+    getExam: (id, callback) => {
+        new Promise((resolve, reject) => {
             var exams = models.Exam.findAll({
                 where: {
                     id: id
@@ -19,49 +19,45 @@ var server = jayson.server({
                 include: include.Exams()                
             });
             resolve(exams);
-        }).then(function(exam) {
-            callback(null, exam);
-        }).catch(function(err) {
-            console.log(err);
-            callback(err);
-        });
+        })
+            .then(exam => callback(null, exam))
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
     },
 
-    getExams: function(courseId, callback) {
-        new Promise(function(resolve, reject) {
+    getExams: (courseId, callback) => {
+        new Promise((resolve, reject) => {
             resolve(models.Exams.findAll({
                 where: {
                     courseId: courseId
                 },
                 include: include.Exams()
             }));
-        }).then(function(exams) {
-            return Promise.all(
-                exams.map(function(exam){
-                    return exam.get();
-                }));
-        }).then(function(exams) {
-            callback(null, exams);
-        }).catch(function(err) {
-            console.log(err);
-            callback(err);
-        });
+        })
+            .then(exams =>  Promise.all( exams.map(exam => exam.get())))
+            .then(exams => callback(null, exams))
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
     },
 
-    getCourse: function(id, callback) {
-        new Promise(function(resolve, reject) {
+    getCourse: (id, callback) => {
+        new Promise((resolve, reject) => {
             resolve(models.Course.findOne({
                 where: {
                     id: id
                 },
                 include: include.Courses()                
             }));
-        }).then(function(course) {
-            callback(null, course.get());
-        }).catch(function (err) {
-            console.log(err);
-            callback(err);
-        });
+        })
+            .then(course => callback(null, course.get()))
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
     },
 
     getCourseFromExamId: (id, callback) => {
@@ -78,7 +74,7 @@ var server = jayson.server({
             });
     },
 
-    getAllCourses: function(callback) {
+    getAllCourses: callback => {
         new Promise((resolve, reject) => {
             resolve(models.Course.findAll({
                 include: include.Courses()
@@ -146,6 +142,33 @@ var server = jayson.server({
             console.log(err);
             callback(err);
         });
+    },
+
+    getProblem: (id, callback) => {
+        new Promise((resolve, reject) => {
+            resolve(models.Problem.find({
+                where: {
+                    id: id
+                }, include: [{
+                    model: models.Answer
+                }, {
+                    model: models.Question
+                }, {
+                    model: models.TagLink,
+                    include: [{
+                        model: models.Tag
+                    }]
+                }]
+            }));
+        })
+            .then(problem => {
+                console.log(problem);
+                callback (null, problem);
+            })
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
     }
 });
 
