@@ -31,25 +31,18 @@
     <!-- </head> -->
     <body layout="column">
         <!-- Wide card with share menu button -->
+
         <style>
-         .demo-card-wide.mdl-card {
-             width: 1024px;
-         }
-         .demo-card-wide > .mdl-card__title {
-             color: #fff;
-             height: 176px;
-             background: url('https://scontent-arn2-1.cdninstagram.com/hphotos-xfa1/t51.2885-15/e35/11349311_537298966426666_84163013_n.jpg') center / cover;
-         }
-         .demo-card-wide > .mdl-card__menu {
-             color: #fff;
+         .float_left {
+             display: inline-block;
+             float: left;
          }
 
-         .md-toolbar-tools h1 {
-             font-size: inherit;
-             font-weight: inherit;
-             margin: inherit;
+         .inline-list {
+             display: inline;
+             list-style-type: none;
          }
-
+         
          @font-face {
              font-family:"icomoon";
              src:url("https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.eot");
@@ -68,58 +61,21 @@
          }
         </style>
 
-        <div layout="column" layout-fill ng-cloak>
-            <md-toolbar layout="row">
-                <div class="md-toolbar-tools">
-                    <md-button ng-click="toggleSidenav('left')" hide-gt-sm class="md-icon-button">
-                        <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg"></md-icon>
-                    </md-button>
-                    <h1>Xmr</h1>
-                </div>
-            </md-toolbar>
-
-
-            <div flex layout="row">
-
-                <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-                    <md-toolbar class="md-theme-indigo">
-                        <h1 class="md-toolbar-tools">Courses</h1>
-                    </md-toolbar>
-                    <md-content layout-padding ng-controller="LeftCtrl">
-                        <md-list>
-                            <md-list-item class="md-2-line">
-                                <md-button class="md-primary">
-                                    Start
-                                </md-button>
-                                <div class="md-list-item-text" layout="column">
-                                    <h3>FMA430</h3>
-                                    <h4>Flerdimensionell analys</h4>
-                                </div>
-                            </md-list-item>
-
-                            <md-divider ></md-divider>
-
-                            <md-list-item class="md-2-line">
-                                <md-button class="md-primary">
-                                    Start
-                                </md-button>
-                                <div class="md-list-item-text">
-                                    <h3>EDAN40</h3>
-                                    <h4>Funktionell programmering</h4>
-                                </div>
-                            </md-list-item>
-                            <md-divider ></md-divider>
-                        </md-list>
-                    </md-content>
-                </md-sidenav>
-
-                <md-content flex id="content" layout-padding>
-                    <div layout="column" layout-fill layout-align="top center" ng-view>
-
-                    </div>
-                </md-content>
-            </div>
+        <div>
+            <a href="#/main">Home</a>
+            <a href="#/courses">Courses</a>            
         </div>
+        
+        <h1>XMR</h1>
+        
+        <div ng-cloak>
+            <h3>Courses</h3>
+
+            <div ng-view>
+            </div>    
+        </div>
+        
+        
 
         <script src="./angular/angular.js"></script>
         <script src="./angular-animate/angular-animate.js"></script>
@@ -132,6 +88,7 @@
         <script src="/js/app.js"></script>
         <script src="/js/CourseController.js"></script>
         <script src="/js/ExamController.js"></script>
+        <script src="/js/TagController.js"></script>
         <script src="/js/xmr.js"></script>
     </body>
 </html>

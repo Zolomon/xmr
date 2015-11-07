@@ -21,6 +21,13 @@
                 });
         };
 
+        var getProblemsWithTag = tag_slug => {
+            return $http.get('/api/tags/' + tag_slug)
+                .then(response => {
+                    return response.data;
+                });
+        };
+
         // var getRepoDetails = function(username, reponame) {
         //     var repo;
         //     var repoUrl = "https://api.github.com/repos/" + username + "/" + reponame;
@@ -39,7 +46,8 @@
         return {
             getExam: getExam,
             getCourses: getCourses,
-            getCourse: getCourse
+            getCourse: getCourse,
+            getProblemsWithTag: getProblemsWithTag
         };
     };
 

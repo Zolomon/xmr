@@ -60,4 +60,21 @@ router.get('/api/courses/:course_id', function(req, res) {
     });
 });
 
+router.get('/api/tags/:tag_slug', (req, res) => {
+    new Promise((resolve, reject) => {
+        client.request('getProblemsWithTag', [req.params.tag_slug], (err, error, response) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log(response);
+                resolve(response);
+            }
+        });
+    }).then(response => {
+        res.send(response);
+    }).catch(err => {
+        res.send(err);
+    });
+});
+
 module.exports = router;

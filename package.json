@@ -10,7 +10,7 @@
     "angular-aria": "^1.4.7",
     "angular-material": "^0.11.2",
     "angular-route": "^1.4.7",
-    "bluebird": "^2.10.1",
+    "bluebird": "^3.0.5",
     "body-parser": "^1.14.0",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
@@ -19,10 +19,10 @@
     "msgpack5": "^3.1.0",
     "path": "^0.12.7",
     "sequelize": "^3.9.0",
-    "sequelize-cli": "^1.9.1",
+    "sequelize-cli": "^2.1.0",
     "serve-favicon": "^2.3.0",
     "slug": "^0.9.1",
-    "sqlite3": "^3.1.0"
+    "sqlite3": "^3.1.1"
   },
   "devDependencies": {},
   "scripts": {

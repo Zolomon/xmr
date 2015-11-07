@@ -16,7 +16,7 @@ var server = jayson.server({
                 where: {
                     id: id
                 },
-                include: include.Exams()
+                include: include.Exams()                
             });
             resolve(exams);
         }).then(function(exam) {
@@ -54,7 +54,7 @@ var server = jayson.server({
                 where: {
                     id: id
                 },
-                include: include.Courses()
+                include: include.Courses()                
             }));
         }).then(function(course) {
             callback(null, course.get());
@@ -72,15 +72,17 @@ var server = jayson.server({
                 }, include: include.Courses()
             }));
         }).then(course => {callback(null, course.get());})
-        .catch(err => {
-            console.log(err);
-            callback(err);
-        });
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
     },
 
     getAllCourses: function(callback) {
         new Promise((resolve, reject) => {
-            resolve(models.Course.findAll({include: include.Courses()}));
+            resolve(models.Course.findAll({
+                include: include.Courses()
+            }));
         }).then(courses =>
                 Promise.all(courses.map(course => course.get()))
                ).then(courses =>
@@ -90,7 +92,63 @@ var server = jayson.server({
                 console.log(err);
                 callback(err);
             });
+    },
+
+    getProblemsWithTag: (tag_slug, callback) => {
+        var resultCourse = new Promise((resolve,reject) => {
+            resolve(models.Course.findAll({
+                include: [{model: models.Exam,
+                           include: [{
+                               model: models.Problem,
+                               include: [{
+                                   model: models.Answer
+                               }, {
+                                   model: models.Question
+                               }, {
+                                   model: models.TagLink,
+                                   include: [{
+                                       model: models.Tag,
+                                       where: {
+                                           slug: tag_slug
+                                       }
+                                   }]
+                               }]
+                           }]
+                          }]
+            }));
+        })
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
+        
+        var resultTag = new Promise((resolve, reject) => {
+            resolve(models.Tag.find({
+                where: {
+                    slug: tag_slug
+                }
+            }));
+        })
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
+
+        var result = Promise.all([resultCourse, resultTag]);
+        
+        result.then(data => {            
+            var result = {
+                course: data[0],
+                tag: data[1]
+            };
+            callback (null, result);
+        }).catch(err => {
+            console.log(err);
+            callback(err);
+        });
     }
 });
+
 console.log(config.rpc.port);
+
 server.http().listen(config.rpc.port);

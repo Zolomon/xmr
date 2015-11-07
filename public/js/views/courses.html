@@ -1,15 +1,10 @@
-<md-content class="md-padding">
-
-    <md-card ng-repeat="course in courses">
-        <md-card-content>
-            <h2 class="md-title">{{course.code}}</h2>
-            <p>
-                {{course.name}}
-            </p>
-        </md-card-content>
-        <div class="md-actions" layout="row" layout-align="end center">
-            <md-button ng-href="#/courses/{{course.id}}">Start</md-button>
-        </div>
-    </md-card>
-</md-content>
+<h2>Courses</h2>
+<ul>
+    <li ng-repeat="course in courses | orderBy: 'code'">
+        <span>({{course.Exams.length}})</span>&nbsp;
+        <a href="#/courses/{{course.id}}">
+            {{course.code}}: {{course.name}}
+        </a>
+    </li>
+</ul>
 <a href="#/main">Back to search</a>
