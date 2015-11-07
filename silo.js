@@ -1,17 +1,17 @@
+/*eslint no-unused-vars: 0 no-console: 0*/
+/*eslint-env node*/
 var jayson = require('jayson');
-//var Promise = require('bluebird');
 var env = process.env.NODE_ENV || 'development';
 var models = require('./silo/models');
 var config = require('./config/config.json')[env];
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+//var Sequelize = require('sequelize');
+//var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var include = require('./includes.js');
 
 var server = jayson.server({
 
     getExam: function(id, callback) {
-        console.log(id);
-        new Promise(function(resolve, reject) {
+        new Promise(function(resolve, _) {
             var exams = models.Exam.findAll({
                 where: {
                     id: id

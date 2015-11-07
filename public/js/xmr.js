@@ -1,3 +1,4 @@
+/*global angular*/
 (function () {
     var xmr = function($http) {
         var getExam = function(id) {
@@ -8,49 +9,36 @@
         };
 
         var getCourses = function () {
-            return $http.get("/api/courses")
+            return $http.get('/api/courses')
                 .then(function (response) {
                     return response.data;
                 });
         };
 
         var getCourse = function(id) {
-            return $http.get("/api/courses/" + id)
+            return $http.get('/api/courses/' + id)
                 .then(function (response) {
                     return response.data;
                 });
         };
 
-        var getProblemsWithTag = tag_slug => {
-            return $http.get('/api/tags/' + tag_slug)
-                .then(response => {
-                    return response.data;
-                });
-        };
+        var getProblemsWithTag = tag_slug => 
+            $http.get('/api/tags/' + tag_slug)
+            .then(response => response.data);
 
-        // var getRepoDetails = function(username, reponame) {
-        //     var repo;
-        //     var repoUrl = "https://api.github.com/repos/" + username + "/" + reponame;
-
-        //     return $http.get(repoUrl)
-        //         .then(function (response) {
-        //             repo = response.data;
-        //             return $http.get(repoUrl + "/collaborators");
-        //         })
-        //         .then(function (response) {
-        //             repo.collaborators = response.data;
-        //             return repo;
-        //         });
-        // };
+        var getProblem = id => 
+            $http.get('/api/problem/' + id)
+            .then(response => response.data);        
 
         return {
             getExam: getExam,
             getCourses: getCourses,
             getCourse: getCourse,
-            getProblemsWithTag: getProblemsWithTag
+            getProblemsWithTag: getProblemsWithTag,
+            getProblem: getProblem
         };
     };
 
-    var module = angular.module("xmr");
-    module.factory("xmr", xmr);
+    var module = angular.module('xmr');
+    module.factory('xmr', xmr);
 }());

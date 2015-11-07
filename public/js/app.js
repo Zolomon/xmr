@@ -1,3 +1,4 @@
+/*global angular*/
 (function() {
     var xmr = angular.module('xmr', ['ngRoute']);
 
@@ -18,6 +19,10 @@
             .when('/tags/:tag_slug', {
                 templateUrl: 'js/views/tag.html',
                 controller: 'TagController'
+            })
+            .when('/courses/:course_id/exams/:exam_id/problems/:problem_id', {
+                templateUrl: 'js/views/problem.html',
+                controller: 'ProblemController'
             })
             .otherwise({
                 redirectTo: '/courses'

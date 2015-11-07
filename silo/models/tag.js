@@ -1,8 +1,8 @@
 (function() {
-    "use strict";
+    'use strict';
 
     module.exports = function(sequelize, DataTypes) {
-        var Tag = sequelize.define("Tag", {
+        var Tag = sequelize.define('Tag', {
             title: DataTypes.STRING,
             slug: DataTypes.STRING
         }, {
