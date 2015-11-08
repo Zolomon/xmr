@@ -64,6 +64,20 @@ router.get('/api/tags/:tag_slug', (req, res) => {
         .catch(err => res.send(err));    
 });
 
+router.put('/api/tags/:tag_id', (req, res) => {
+    new Promise((resolve, reject) => {
+        client.request('updateTag', [req.params.tag_id, req.body], (err, error, response) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(response);
+            }
+        });
+    })
+        .then(response => res.send(response))
+        .catch(err => res.send(err));
+});
+
 router.get('/api/problems/:problem_id', (req, res) => {
     new Promise((resolve, reject) => {
         client.request('getProblem', [req.params.problem_id], (err, error, response) => {

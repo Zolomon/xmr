@@ -2,14 +2,14 @@
 (function() {
     var app = angular.module('xmr');
 
-    var CourseController = function($scope, $routeParams, xmr) {
+    var CourseController = ($scope, $routeParams, xmr) => {
         var onCourses = data => $scope.courses = data;
 
         var onCourse = data => {
             $scope.course = data;
 
             var examToTaglink = e => e.Problems.map(x => x.TagLinks);
-            var mapExams = data => [].concat.apply([], data.Exams.map(examToTaglink));
+            var mapExams = [].concat.apply([], data.Exams.map(examToTaglink));
             var tagLinks = [].concat.apply([], mapExams);
 
             var flattenedTagLinks = {};

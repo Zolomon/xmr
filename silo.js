@@ -4,9 +4,10 @@ var jayson = require('jayson');
 var env = process.env.NODE_ENV || 'development';
 var models = require('./silo/models');
 var config = require('./config/config.json')[env];
-//var Sequelize = require('sequelize');
-//var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var include = require('./includes.js');
+var slugify = require('slug');
 
 var server = jayson.server({
 
@@ -169,6 +170,27 @@ var server = jayson.server({
                 console.log(err);
                 callback(err);
             });
+    },
+
+    updateTag: (id, tag, callback) => {
+        new Promise((resolve, reject) => {
+            console.log('id: ' + id);
+            console.log('tag: ' + tag);
+            resolve(models.Tag.update(
+                {
+                    title: tag.title,
+                    slug: slugify(tag.title),
+                    updatedAt: sequelize.fn('NOW')
+                },
+                {
+                    where: {
+                        id: id
+                    }
+                }
+            ));
+            
+        })            
+            .then(result => callback(null, result));
     }
 });
 

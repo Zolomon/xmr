@@ -2,6 +2,14 @@
 
 <h2>Tag: {{tag.tag.title}}</h2>
 
+<div>
+    <label for="tagTitle">Tag title: </label>
+    <input type="text" id="tagTitle" ng-model="tag.tag.title">
+</div>
+<input type="submit" ng-click="updateTagName(tag.tag.title)" name="submit" value="Update name" autofocus="true" >
+
+<h3>Problems</h3>
+
 <div ng-repeat="course in tag.course">
     <ul ng-repeat="exam in course.Exams" class="inline-list">
         <li ng-repeat="problem in exam.Problems" class="inline-list">
@@ -10,3 +18,5 @@
         </li>
     </ul>
 </div>
+
+
