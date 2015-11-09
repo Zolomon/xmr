@@ -191,6 +191,32 @@ var server = jayson.server({
             
         })            
             .then(result => callback(null, result));
+    },
+
+    addTagToProblem: (problem_id, tag_title, callback) => {
+        new Promise((resolve, reject) => {
+            console.log('adding tag: ' + tag_title);
+            var tag = models.Tag.find({
+                where: {
+                    slug: slugify(tag_title)
+                }}).then(tag => {
+                    if (tag === null || tag === undefined) {
+                        
+                    }
+                    
+                    models.TagLinks.create({
+                        title: tag.title,
+                        createdAt: sequelize.fn('NOW'),
+                        updatedAt: sequelize.fn('NOW'),
+                        ProblemId: problem_id,
+                        TagId: tag.id
+                    })
+                });
+            // 1. Find tag
+            // 2. Create tag if it didn't exist
+            // 3. Create a taglink to the problem for the tag.
+            // Return the tag
+        })
     }
 });
 

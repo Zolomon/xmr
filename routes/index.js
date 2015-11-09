@@ -78,6 +78,34 @@ router.put('/api/tags/:tag_id', (req, res) => {
         .catch(err => res.send(err));
 });
 
+router.delete('/api/taglinks/:taglink_id', (req, res) => {
+    new Promise((resolve, reject) => {
+        client.request('deleteTaglink', [req.params.taglink_id], (err, error, response)  => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(response);
+            }
+        })
+            .then(response => res.send(response))
+            .catch(err => res.send(err));        
+    });
+});
+
+router.post('/api/tags', (req, res) => {
+    new Promise((resolve, reject) => {
+        client.request('addTagToProblem', [req.body.problem_id, req.body.tag_title], (err, error, response) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(response);
+            }
+        });
+    })
+        .then(response => res.send(response))
+        .catch(err => res.send(err));
+})
+
 router.get('/api/problems/:problem_id', (req, res) => {
     new Promise((resolve, reject) => {
         client.request('getProblem', [req.params.problem_id], (err, error, response) => {

@@ -5,6 +5,12 @@
     var ProblemController = ($scope, $routeParams, xmr) => {
         var onProblem = data => $scope.problem = data;
 
+        var deleteTagLink = tagLink_id =>
+            xmr.deleteTagLink(tagLink_id);
+
+        var addTagToProblem = (problem_id, tag_title) =>
+            xmr.addTagToProblem(problem_id, tag_title);
+        
         var onError = () => $scope.error = 'Could not fetch problem.';
 
         if ($routeParams.problem_id !== undefined &&

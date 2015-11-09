@@ -25,7 +25,18 @@
 
         var updateTag = tag => 
             $http.put('/api/tags/' + tag.id, tag)
-                .then(response => response.data);
+            .then(response => response.data);
+
+        var deleteTagLink = taglink_id =>
+            $http.delete('/api/taglinks/' + taglink_id)
+            .then(response => response.data);
+
+        var addTagToProblem = (problem_id, tag_title) =>
+            $http.post('/api/tags', {
+                problem_id: problem_id,
+                tag_title: tag_title
+            })
+            .then(response => response.data);
 
         return {
             getExam: getExam,
