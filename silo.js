@@ -146,25 +146,17 @@ var server = jayson.server({
     },
 
     getProblem: (id, callback) => {
-        new Promise((resolve, reject) => {
-            resolve(models.Problem.find({
-                where: {
-                    id: id
-                }, include: [{
-                    model: models.Answer
-                }, {
-                    model: models.Question
-                }, {
-                    model: models.TagLink,
-                    include: [{
-                        model: models.Tag
-                    }]
-                }]
-            }));
-        })
-            .then(problem => {
-                console.log(problem);
-                callback (null, problem);
+        var includeWhere = include.Courses();
+        includeWhere[0].include[0].where = {id: id};
+
+		console.log();
+        
+        models.Course.findAll({
+            include: includeWhere
+        })        
+            .then(problem => {                
+                console.log('Getting problem: ' + problem[0]);
+                callback (null, problem[0]);
             })
             .catch(err => {
                 console.log(err);
@@ -193,33 +185,57 @@ var server = jayson.server({
             .then(result => callback(null, result));
     },
 
-    addTagToProblem: (problem_id, tag_title, callback) => {
+    addTagToProblem: (course_id, exam_id, problem_id, tag_title, callback) => {
         new Promise((resolve, reject) => {
-            console.log('adding tag: ' + tag_title);
-            var tag = models.Tag.find({
+            var inclusion = include.Courses();
+            inclusion[0].include[0].where = {id: exam_id};
+            inclusion[0].include[0].include[0].where = {id: problem_id};
+            
+            resolve(models.Course.find({
                 where: {
-                    slug: slugify(tag_title)
-                }}).then(tag => {
-                    if (tag === null || tag === undefined) {
-                        
-                    }
-                    
-                    models.TagLinks.create({
-                        title: tag.title,
-                        createdAt: sequelize.fn('NOW'),
-                        updatedAt: sequelize.fn('NOW'),
-                        ProblemId: problem_id,
-                        TagId: tag.id
-                    })
-                });
-            // 1. Find tag
-            // 2. Create tag if it didn't exist
-            // 3. Create a taglink to the problem for the tag.
-            // Return the tag
-        })
+                    id: course_id
+                },
+                include: inclusion
+            }));
+        }).then(course => {
+            console.log(course);
+        });
     }
+    // console.log('adding tag: ' + tag_title);
+    //     var tag = models.Tag.find({
+    //         where: {
+    //             slug: slugify(tag_title)
+    //         }
+    //  })
+    //      .then(tag => {
+    //             if (tag === null || tag === undefined) {
+    //                 // Tag doesn't exist, let's create it.
+    //              models.Tag.create({
+    //                  title: tag_title,
+    //                  slug: slugify(tag_title)                        
+    //              }).then(newTag => {
+    //                  newTag.setCourse()
+    //              }).catch(error => {
+    //                  console.log(error);
+    //              });
+    //             }
+    
+    //             models.TagLinks.create({
+    //                 title: tag.title,
+    //                 createdAt: sequelize.fn('NOW'),
+    //                 updatedAt: sequelize.fn('NOW'),
+    //                 ProblemId: problem_id,
+    //                 TagId: tag.id
+    //             })
+    //         });
+    //     // 1. Find tag
+    //     // 2. Create tag if it didn't exist
+    //     // 3. Create a taglink to the problem for the tag.
+    //     // Return the tag
+    // })
+    //}
+    //});
 });
-
 console.log(config.rpc.port);
 
 server.http().listen(config.rpc.port);

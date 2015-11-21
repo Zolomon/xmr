@@ -31,8 +31,10 @@
             $http.delete('/api/taglinks/' + taglink_id)
             .then(response => response.data);
 
-        var addTagToProblem = (problem_id, tag_title) =>
+        var addTagToProblem = (course_id, exam_id, problem_id, tag_title) =>
             $http.post('/api/tags', {
+                course_id: course_id,
+                exam_id: exam_id,
                 problem_id: problem_id,
                 tag_title: tag_title
             })

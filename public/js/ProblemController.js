@@ -1,9 +1,11 @@
 /*global angular*/
+/*eslint no-unused-vars: 0*/
 (function() {
     var app = angular.module('xmr');
 
     var ProblemController = ($scope, $routeParams, xmr) => {
-        var onProblem = data => $scope.problem = data;
+        var onProblem = data =>
+            $scope.problem = data;
 
         var deleteTagLink = tagLink_id =>
             xmr.deleteTagLink(tagLink_id);

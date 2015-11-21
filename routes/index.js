@@ -94,17 +94,22 @@ router.delete('/api/taglinks/:taglink_id', (req, res) => {
 
 router.post('/api/tags', (req, res) => {
     new Promise((resolve, reject) => {
-        client.request('addTagToProblem', [req.body.problem_id, req.body.tag_title], (err, error, response) => {
-            if(err) {
-                reject(err);
-            } else {
-                resolve(response);
-            }
-        });
+        client.request('addTagToProblem',
+                       [req.body.course_id,
+                        req.body.exam_id,
+                        req.body.problem_id,
+                        req.body.tag_title],
+                       (err, error, response) => {
+                           if(err) {
+                               reject(err);
+                           } else {
+                               resolve(response);
+                           }
+                       });
     })
         .then(response => res.send(response))
         .catch(err => res.send(err));
-})
+});
 
 router.get('/api/problems/:problem_id', (req, res) => {
     new Promise((resolve, reject) => {

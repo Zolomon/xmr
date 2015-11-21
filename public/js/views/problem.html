@@ -1,8 +1,10 @@
 <h2>Problem</h2>
 
+<pre>{{problem}}</pre>
+
 <h4>Tags:</h4>
 <ul>
-    <li ng-repeat="tagLink in problem.TagLinks">
+    <li ng-repeat="tagLink in problem.Exams[0].Problems[0].TagLinks">
         <a href="#/tags/{{tagLink.Tag.slug}}">{{tagLink.Tag.title}}</a>
         <button ng-click="deleteTagLink(problem, tagLink)"> <i class="fa fa-trash-o"></i></button>
     </li>
@@ -17,10 +19,10 @@
 
 <h3>Question</h3>
 <div class="problem-img">
-    <img src="/{{problem.Question.filename}}" />
+    <img src="/{{problem.Exams[0].Problems[0].Question.filename}}" />
 </div>
 
 <h3>Answer</h3>
-<div class="problem-img" ng-show="problem.Answer">
-    <img src="/{{problem.Answer.filename}}" />
+<div class="problem-img" ng-show="problem.Exams[0].Problems[0].Answer">
+    <img src="/{{problem.Exams[0].Problems[0].filename}}" />
 </div>
