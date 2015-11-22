@@ -4,14 +4,32 @@
     var app = angular.module('xmr');
 
     var ProblemController = ($scope, $routeParams, xmr) => {
-        var onProblem = data =>
-            $scope.problem = data;
+        $scope.onCourse = data =>
+            $scope.course = data;
 
-        var deleteTagLink = tagLink_id =>
-            xmr.deleteTagLink(tagLink_id);
+        $scope.deleteTagLink = tagLink => {
+            console.log($scope.course.Exams[0].Problems[0]);
+            var index = $scope.course.Exams[0].Problems[0].TagLinks.indexOf(tagLink);
+            $scope.course.Exams[0].Problems[0].TagLinks.splice(index, 1);
+            
+            xmr.deleteTagLink(tagLink.id);
+        };
 
-        var addTagToProblem = (problem_id, tag_title) =>
-            xmr.addTagToProblem(problem_id, tag_title);
+
+        $scope.addTagAndTagLinkToProblem = (course_id, exam_id, problem_id, tag_title) => {
+            console.log(tag_title);
+            //Promise.all([
+            xmr.addTagAndTagLinkToProblem(course_id, exam_id, problem_id, tag_title)
+                .then(tagLink => {
+                    console.log(tagLink);                    
+                    $scope.course.Exams[0].Problems[0].TagLinks.push(tagLink);}, onError);
+            xmr.getProblem($routeParams.problem_id)
+                .then($scope.onCourse, onError);
+            //]).then(x => {
+            //console.log('yeah!');
+            $scope.tag.title = '';
+            //});
+        };
         
         var onError = () => $scope.error = 'Could not fetch problem.';
 
@@ -19,7 +37,9 @@
             Number($routeParams.problem_id) > 0)
         {
             xmr.getProblem($routeParams.problem_id)
-                .then(onProblem, onError);
+                .then($scope.onCourse, onError);
+
+            $scope.tag = {title: ''};
         }
     };
 

@@ -27,11 +27,13 @@
             $http.put('/api/tags/' + tag.id, tag)
             .then(response => response.data);
 
-        var deleteTagLink = taglink_id =>
+        var deleteTagLink = taglink_id => {
+            console.log('deleting it');
             $http.delete('/api/taglinks/' + taglink_id)
-            .then(response => response.data);
+                .then(response => response.data);
+        };
 
-        var addTagToProblem = (course_id, exam_id, problem_id, tag_title) =>
+        var addTagAndTagLinkToProblem = (course_id, exam_id, problem_id, tag_title) =>
             $http.post('/api/tags', {
                 course_id: course_id,
                 exam_id: exam_id,
@@ -46,7 +48,9 @@
             getCourse: getCourse,
             getProblemsWithTag: getProblemsWithTag,
             getProblem: getProblem,
-            updateTag: updateTag
+            updateTag: updateTag,
+            addTagAndTagLinkToProblem: addTagAndTagLinkToProblem,
+            deleteTagLink: deleteTagLink
         };
     };
 

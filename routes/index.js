@@ -80,7 +80,7 @@ router.put('/api/tags/:tag_id', (req, res) => {
 
 router.delete('/api/taglinks/:taglink_id', (req, res) => {
     new Promise((resolve, reject) => {
-        client.request('deleteTaglink', [req.params.taglink_id], (err, error, response)  => {
+        client.request('destroyTagLink', [req.params.taglink_id], (err, error, response)  => {
             if (err) {
                 reject(err);
             } else {
@@ -93,8 +93,9 @@ router.delete('/api/taglinks/:taglink_id', (req, res) => {
 });
 
 router.post('/api/tags', (req, res) => {
+    console.log(req.body);
     new Promise((resolve, reject) => {
-        client.request('addTagToProblem',
+        client.request('addTagAndTagLinkToProblem',
                        [req.body.course_id,
                         req.body.exam_id,
                         req.body.problem_id,

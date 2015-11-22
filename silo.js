@@ -8,67 +8,44 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var include = require('./includes.js');
 var slugify = require('slug');
+var xmr = require('./libxmr.js');
+
+//xmr.findProblem({where: {id: 329}}).then(x => console.log(x));
 
 var server = jayson.server({
 
-    getExam: (id, callback) => {
-        new Promise((resolve, reject) => {
-            var exams = models.Exam.findAll({
-                where: {
-                    id: id
-                },
-                include: include.Exams()                
-            });
-            resolve(exams);
+    getExam: (id, callback) => 
+        xmr.findExam({where: {id: id}, include: include.Exams()})
+        .then(exam => callback(null, exam))
+        .catch(err => {
+            console.log(err);
+            callback(err);
         })
-            .then(exam => callback(null, exam))
-            .catch(err => {
-                console.log(err);
-                callback(err);
-            });
-    },
+            ,
 
-    getExams: (courseId, callback) => {
-        new Promise((resolve, reject) => {
-            resolve(models.Exams.findAll({
-                where: {
-                    courseId: courseId
-                },
-                include: include.Exams()
-            }));
+    getExams: (courseId, callback) => 
+        xmr.findAllExams({where: {courseId: courseId}, include: include.Exams()})            
+        .then(exams => callback(null, exams))
+        .catch(err => {
+            console.log(err);
+            callback(err);
         })
-            .then(exams =>  Promise.all( exams.map(exam => exam.get())))
-            .then(exams => callback(null, exams))
-            .catch(err => {
-                console.log(err);
-                callback(err);
-            });
-    },
+            ,
 
-    getCourse: (id, callback) => {
-        new Promise((resolve, reject) => {
-            resolve(models.Course.findOne({
-                where: {
-                    id: id
-                },
-                include: include.Courses()                
-            }));
+    getCourse: (id, callback) =>         
+        xmr.findCourse({where: {id: id}, include: include.Courses()})
+        .then(course => callback(null, course))
+        .catch(err => {
+            console.log(err);
+            callback(err);
         })
-            .then(course => callback(null, course.get()))
-            .catch(err => {
-                console.log(err);
-                callback(err);
-            });
-    },
+            ,
 
     getCourseFromExamId: (id, callback) => {
-        new Promise((resolve, reject) => {
-            resolve(models.Course.findAll({
-                where: {
-                    'Exam.id': id
-                }, include: include.Courses()
-            }));
-        }).then(course => {callback(null, course.get());})
+        var inclusion = include.Courses();
+        inclusion[0].where = {id: id};
+        xmr.findAllCourses({include: inclusion})
+            .then(course => {callback(null, course.get());})
             .catch(err => {
                 console.log(err);
                 callback(err);
@@ -76,64 +53,36 @@ var server = jayson.server({
     },
 
     getAllCourses: callback => {
-        new Promise((resolve, reject) => {
-            resolve(models.Course.findAll({
-                include: include.Courses()
-            }));
-        }).then(courses =>
-                Promise.all(courses.map(course => course.get()))
-               ).then(courses =>
-                      callback(null, courses)
-                     )
+        xmr.findAllCourses({include: include.Courses()})
+            .then(courses =>
+                  callback(null, courses)
+                 )
             .catch(err => {
-                console.log(err);
+                console.log(err); 
                 callback(err);
             });
     },
 
-    getProblemsWithTag: (tag_slug, callback) => {
-        var resultCourse = new Promise((resolve,reject) => {
-            resolve(models.Course.findAll({
-                include: [{model: models.Exam,
-                           include: [{
-                               model: models.Problem,
-                               include: [{
-                                   model: models.Answer
-                               }, {
-                                   model: models.Question
-                               }, {
-                                   model: models.TagLink,
-                                   include: [{
-                                       model: models.Tag,
-                                       where: {
-                                           slug: tag_slug
-                                       }
-                                   }]
-                               }]
-                           }]
-                          }]
-            }));
-        })
+    getProblemsWithTag: (tag_slug, callback) =>   {
+        var inclusion = include.Courses();
+        inclusion[0].include[0].include[2].include[0].where = {slug: tag_slug}; 
+        var resultCourse =
+            xmr.findAllCourses({include: inclusion})
             .catch(err => {
                 console.log(err);
                 callback(err);
             });
         
-        var resultTag = new Promise((resolve, reject) => {
-            resolve(models.Tag.find({
-                where: {
-                    slug: tag_slug
-                }
-            }));
-        })
-            .catch(err => {
-                console.log(err);
-                callback(err);
-            });
+        var resultTag = xmr.findTag({where: {
+            slug: tag_slug
+        }}).catch(err => {
+            console.log(err);
+            callback(err);
+        });
 
         var result = Promise.all([resultCourse, resultTag]);
         
-        result.then(data => {            
+        result.then(data => {
             var result = {
                 course: data[0],
                 tag: data[1]
@@ -151,7 +100,7 @@ var server = jayson.server({
 
 		console.log();
         
-        models.Course.findAll({
+        xmr.findAllCourses({
             include: includeWhere
         })        
             .then(problem => {                
@@ -164,52 +113,54 @@ var server = jayson.server({
             });
     },
 
-    updateTag: (id, tag, callback) => {
-        new Promise((resolve, reject) => {
-            console.log('id: ' + id);
-            console.log('tag: ' + tag);
-            resolve(models.Tag.update(
-                {
-                    title: tag.title,
-                    slug: slugify(tag.title),
-                    updatedAt: sequelize.fn('NOW')
-                },
-                {
-                    where: {
-                        id: id
-                    }
-                }
-            ));
-            
-        })            
-            .then(result => callback(null, result));
-    },
+    updateTag: (id, tag, callback) => 
+        xmr.updateTag({
+            title: tag.title,
+            slug: slugify(tag.title),
+            updatedAt: sequelize.fn('NOW')
+        }, {
+            where: {
+                id: id
+            }
+        })
+        .then(result => callback(null, result))
+    ,
+    destroyTagLink: (id, callback) => 
+        xmr.destroyTagLink({where: {id: id}})
+            .then(result => callback(null, {}))
+    ,
 
-    addTagToProblem: (course_id, exam_id, problem_id, tag_title, callback) => {
-        
-            var inclusion = include.Courses();
-            inclusion[0].include[0].where = {id: exam_id};
-            inclusion[0].include[0].include[0].where = {id: problem_id};
-            
-            models.Course.findAll({
-                where: {
-                    id: course_id
-                },
-                include: inclusion
-            }).then(courses => {
-                
+    addTagAndTagLinkToProblem: (course_id, exam_id, problem_id, tag_title, callback) => {
+        // 1. find or create the tag
+        // 2.
+        console.log('ADDING!!!');
+        xmr.findOrCreateTagWithTagLink(course_id, exam_id, problem_id, tag_title)
+            .then(tag => {
+                callback(null, {tag: tag});
             });
-        }).then(course => {
-            console.log(course);
+        // var inclusion = include.Courses();
+        //     inclusion[0].include[0].where = {id: exam_id};
+        //     inclusion[0].include[0].include[0].where = {id: problem_id};
+        
+        //     models.Course.findAll({
+        //         where: {
+        //             id: course_id
+        //         },
+        //         include: inclusion
+        //     }).then(courses => {
+        
+        //     });
+        // }).then(course => {
+        //     console.log(course);
 
-            models.Tag.find({
-                where: {
-                    slug: slugify(tag_title)
-                }
-            }).then(tag => {
-            })
-            
-            //callback(null, course[0]);
+        //     models.Tag.find({
+        //         where: {
+        //             slug: slugify(tag_title)
+        //         }
+        //     }).then(tag => {
+        //     })
+        
+        //callback(null, course[0]);
         
     }
     // console.log('adding tag: ' + tag_title);

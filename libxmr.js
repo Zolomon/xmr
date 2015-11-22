@@ -32,84 +32,110 @@ var Xmr = (function() {
                     .then(resolve)
                     .catch(reject));
 
-    var update = (model, options) =>
+    var update = (model, values,  options) =>
         new Promise((resolve, reject) =>
-                    model.update(options)
+                    model.update(values, options)
                     .then(resolve)
                     .catch(reject));
     
     var createCourse = options => create(m.Course, options);
-    var updateCourse = options => update(m.Course, options);
+    var updateCourse = (values, options) => update(m.Course, values, options);
     var findCourse = options => find(m.Course, options);
     var findAllCourses = options => findAll(m.Course, options);
     var destroyCourse = options => destroy(m.Course, options);
     
     var createExam = options => create(m.Exam, options);
-    var updateExam = options => update(m.Exam, options);
+    var updateExam = (values, options) => update(m.Exam, values, options);
     var findAllExams = options => findAll(m.Exam, options);
     var findExam = options => find(m.Exam, options);
     var destroyExam = options => destroy(m.Exam, options);
 
     var createProblem = options => create(m.Problem, options);
-    var updateProblem = options => update(m.Problem, options);
+    var updateProblem = (values, options) => update(m.Problem, values, options);
     var findAllProblems = options => findAll(m.Problem, options);
     var findProblem = options => find(m.Problem, options);
     var destroyProblem = options => destroy(m.Problem, options);
 
     var createTag = options => create(m.Tag, options);
-    var updateTag = options => update(m.Tag, options);
+    var updateTag = (values, options) => update(m.Tag, values, options);
     var findAllTags = options => findAll(m.Tag, options);
     var findTag = options => find(m.Tag, options);
     var destroyTag = options => destroy(m.Tag, options);
-        
+    
     var createTagLink = options => create(m.TagLink, options);
-    var updateTagLink = options => update(m.TagLink, options);
+    var updateTagLink = (values, options) => update(m.TagLink, values, options);
     var findAllTagLinks = options => findAll(m.TagLink, options);
     var findTagLink = options => find(m.TagLink, options);
     var destroyTagLink = options => destroy(m.TagLink, options);    
 
-    var findOrCreateTag = (course_id, exam_id, problem_id, tag_title) => new Promise((resolve, reject) => {    
+    var findOrCreateTagWithTagLink = (course_id, exam_id, problem_id, tag_title) => new Promise((resolve, reject) => {
+        console.log('Calling findOrCreateTagWithTagLink');
         findTag({ where: { slug: slugify(tag_title) } })
             .then(tag => {
+                console.log('found the tag: ' + tag);
                 return new Promise(
                     (resolveTag, rejectTag) => {
                         if (tag === undefined || tag === null) {
-                            createTag( { title: title, slug: slugify(title) } )
-                                .then(newTag => resolveTag(newTag))
+                            createTag( { title: tag_title, slug: slugify(tag_title) } )
+                                .then(newTag => {
+                                    console.log('created the tag: ' + newTag);
+                                    resolveTag({new: true, tag: newTag});
+                                })
                                 .catch(rejectTag);
 
                         } else {
-                            resolveTag(tag);
+                            console.log('Found the tag: ' + tag);
+                            resolveTag({new: false, tag: tag});
                         }
                     });            
             }).then(newTag => {
-                findCourse({where:{id: course_id}, include: include.Courses()})
-                    .then(course => {
-                        findExam({where:{id: exam_id}}).then(exam => {
-                            findProblem({where:{id: problem_id}}).then(problem => {
+                if (newTag.new) {
+                    findCourse({where:{id: course_id}, include: include.Courses()})
+                        .then(course => {
+                            findExam({where:{id: exam_id}})
+                                .then(exam => {
+                                    findProblem({where:{id: problem_id}})
+                                        .then(problem => {
 
-                                newTag.setCourse(course);
-                                newTag.setExam(exam);
-                                newTag.setProblem(problem);
+                                            newTag.setCourse(course);
+                                            newTag.setExam(exam);
+                                            newTag.setProblem(problem);
 
-                                createTagLink({
-                                    title: newTag.title
-                                }).then(tagLink => {
+                                            createTagLink({
+                                                title: newTag.tag.title
+                                            }).then(tagLink => {
 
-                                    tagLink.setTag(newTag);
-                                    tagLink.setProblem(problem);
-                                    
-                                    resolve(newTag);
-                                    
+                                                tagLink.setTag(newTag.tag);
+                                                tagLink.setProblem(problem);
+                                                
+                                                resolve(tagLink);
+                                                
+                                            }).catch(reject);
+                                        }).catch(reject);
                                 }).catch(reject);
-                            }).catch(reject);
                         }).catch(reject);
-                    }).catch(reject);                
+                } else {
+                    findProblem({where: {id: problem_id}})
+                        .then(problem => {
+                            createTagLink({
+                                title: newTag.tag.title
+                            }).then(tagLink => {
+                                
+                                tagLink.setTag(newTag.tag);
+                                tagLink.setProblem(problem);
+                                
+                                resolve(tagLink);
+                                
+                            }).catch(reject);
+                        }).catch(reject);                    
+                    
+                    //resolve(newTag.tag);
+                }
             });
     });
 
     return {        
-        findOrCreateTag: findOrCreateTag,        
+        findOrCreateTagWithTagLink: findOrCreateTagWithTagLink,
         
         createCourse: createCourse,
         updateCourse: updateCourse,
@@ -142,3 +168,5 @@ var Xmr = (function() {
         destroyTagLink: destroyTagLink
     };
 }());
+
+module.exports = Xmr;
