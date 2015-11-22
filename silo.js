@@ -186,20 +186,31 @@ var server = jayson.server({
     },
 
     addTagToProblem: (course_id, exam_id, problem_id, tag_title, callback) => {
-        new Promise((resolve, reject) => {
+        
             var inclusion = include.Courses();
             inclusion[0].include[0].where = {id: exam_id};
             inclusion[0].include[0].include[0].where = {id: problem_id};
             
-            resolve(models.Course.find({
+            models.Course.findAll({
                 where: {
                     id: course_id
                 },
                 include: inclusion
-            }));
+            }).then(courses => {
+                
+            });
         }).then(course => {
             console.log(course);
-        });
+
+            models.Tag.find({
+                where: {
+                    slug: slugify(tag_title)
+                }
+            }).then(tag => {
+            })
+            
+            //callback(null, course[0]);
+        
     }
     // console.log('adding tag: ' + tag_title);
     //     var tag = models.Tag.find({
