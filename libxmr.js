@@ -107,15 +107,6 @@ var Xmr = (function() {
                     }).catch(reject);                
             });
     });
-   
-    Promise.all([
-        //findCourse,
-        //findProblem(329),
-        //findTag('dubbeal')
-        findOrCreateTag(6, 50, 329, 'dubbeal')
-    ])
-        .then(values => values.forEach(x => console.log(x)))
-        .catch(err => console.log(err));
 
     return {        
         findOrCreateTag: findOrCreateTag,        
