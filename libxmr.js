@@ -9,34 +9,34 @@ var Xmr = (function() {
     var slugify = require('slug');      
 
     var create = (model, options) => 
-        new Promise((resolve, reject) => 
-                    model.create(options)
-                    .then(resolve)
-                    .catch(reject));
+        // new Promise((resolve, reject) => 
+        model.create(options);
+    // .then(resolve)
+    // .catch(reject));
 
     var findAll = (model, options) =>
-        new Promise((resolve, reject) =>
-                    model.findAll(options)
-                    .then(resolve)
-                    .catch(reject));
+        // new Promise((resolve, reject) =>
+        model.findAll(options);
+    // .then(resolve)
+    // .catch(reject));
     
     var find = (model, options) =>
-        new Promise((resolve, reject) =>
-                    model.find(options)
-                    .then(resolve)
-                    .catch(reject));
+        // new Promise((resolve, reject) =>
+        model.find(options);
+    // .then(resolve)
+    // .catch(reject));
 
     var destroy = (model, options) =>
-        new Promise((resolve, reject) =>
-                    model.destroy(options)
-                    .then(resolve)
-                    .catch(reject));
+        // new Promise((resolve, reject) =>
+        model.destroy(options);
+    // .then(resolve)
+    // .catch(reject));
 
     var update = (model, values,  options) =>
-        new Promise((resolve, reject) =>
-                    model.update(values, options)
-                    .then(resolve)
-                    .catch(reject));
+        // new Promise((resolve, reject) =>
+        model.update(values, options);
+    // .then(resolve)
+    // .catch(reject));
     
     var createCourse = options => create(m.Course, options);
     var updateCourse = (values, options) => update(m.Course, values, options);
@@ -76,7 +76,12 @@ var Xmr = (function() {
                 return new Promise(
                     (resolveTag, rejectTag) => {
                         if (tag === undefined || tag === null) {
-                            createTag( { title: tag_title, slug: slugify(tag_title) } )
+                            createTag( { title: tag_title,
+                                         slug: slugify(tag_title),
+                                         courseId: course_id,
+                                         examId: exam_id,
+                                         problemId: problem_id
+                                       } )
                                 .then(newTag => {
                                     console.log('created the tag: ' + newTag);
                                     resolveTag({new: true, tag: newTag});
@@ -90,30 +95,34 @@ var Xmr = (function() {
                     });            
             }).then(newTag => {
                 if (newTag.new) {
-                    findCourse({where:{id: course_id}, include: include.Courses()})
-                        .then(course => {
-                            findExam({where:{id: exam_id}})
-                                .then(exam => {
-                                    findProblem({where:{id: problem_id}})
-                                        .then(problem => {
+                    var inclusion = include.Courses();
+                    inclusion[0].where = {id: exam_id};
+                    inclusion[0].include[0].where = {id: problem_id};
+                    
+                    findAllCourses({
+                        where: {id: course_id},
+                        include: inclusion
+                    }).then(course => {
+                        var c = course[0];
+                        var e = c.Exams[0];
+                        var p = e.Problems[0];
 
-                                            newTag.setCourse(course);
-                                            newTag.setExam(exam);
-                                            newTag.setProblem(problem);
+                        console.log(JSON.stringify(newTag));
+                        
+                        newTag.tag.setCourse(c);
+                        newTag.tag.setExam(e);
+                        newTag.tag.setProblem(p);
 
-                                            createTagLink({
-                                                title: newTag.tag.title
-                                            }).then(tagLink => {
+                        createTagLink({
+                            title: newTag.tag.title
+                        }).then(tagLink => {
+                            tagLink.setTag(newTag.tag);
+                            tagLink.setProblem(p);
 
-                                                tagLink.setTag(newTag.tag);
-                                                tagLink.setProblem(problem);
-                                                
-                                                resolve(tagLink);
-                                                
-                                            }).catch(reject);
-                                        }).catch(reject);
-                                }).catch(reject);
+                            resolve(tagLink);
                         }).catch(reject);
+                        
+                    }).catch(reject);
                 } else {
                     findProblem({where: {id: problem_id}})
                         .then(problem => {

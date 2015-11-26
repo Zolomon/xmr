@@ -136,67 +136,13 @@ var server = jayson.server({
         console.log('ADDING!!!');
         xmr.findOrCreateTagWithTagLink(course_id, exam_id, problem_id, tag_title)
             .then(tag => {
+                console.log('tag: ' + tag);
                 callback(null, {tag: tag});
+            }).catch(err => {
+                console.log(err);
+                callback(err);
             });
-        // var inclusion = include.Courses();
-        //     inclusion[0].include[0].where = {id: exam_id};
-        //     inclusion[0].include[0].include[0].where = {id: problem_id};
-        
-        //     models.Course.findAll({
-        //         where: {
-        //             id: course_id
-        //         },
-        //         include: inclusion
-        //     }).then(courses => {
-        
-        //     });
-        // }).then(course => {
-        //     console.log(course);
-
-        //     models.Tag.find({
-        //         where: {
-        //             slug: slugify(tag_title)
-        //         }
-        //     }).then(tag => {
-        //     })
-        
-        //callback(null, course[0]);
-        
-    }
-    // console.log('adding tag: ' + tag_title);
-    //     var tag = models.Tag.find({
-    //         where: {
-    //             slug: slugify(tag_title)
-    //         }
-    //  })
-    //      .then(tag => {
-    //             if (tag === null || tag === undefined) {
-    //                 // Tag doesn't exist, let's create it.
-    //              models.Tag.create({
-    //                  title: tag_title,
-    //                  slug: slugify(tag_title)                        
-    //              }).then(newTag => {
-    //                  newTag.setCourse()
-    //              }).catch(error => {
-    //                  console.log(error);
-    //              });
-    //             }
-    
-    //             models.TagLinks.create({
-    //                 title: tag.title,
-    //                 createdAt: sequelize.fn('NOW'),
-    //                 updatedAt: sequelize.fn('NOW'),
-    //                 ProblemId: problem_id,
-    //                 TagId: tag.id
-    //             })
-    //         });
-    //     // 1. Find tag
-    //     // 2. Create tag if it didn't exist
-    //     // 3. Create a taglink to the problem for the tag.
-    //     // Return the tag
-    // })
-    //}
-    //});
+    }    
 });
 console.log(config.rpc.port);
 
