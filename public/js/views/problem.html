@@ -1,29 +1,45 @@
-<h2>Problem</h2>
+<h2 class="shaded">{{course.code}}: {{course.Exams[0].code}} - Problem {{course.Exams[0].Problems[0].index}}</h2>
 
-<h4>Tags:</h4>
-<ul>
-    <li ng-repeat="tagLink in course.Exams[0].Problems[0].TagLinks">
-        <a href="#/tags/{{tagLink.Tag.slug}}">{{tagLink.Tag.title}}</a>
-        <button ng-click="deleteTagLink(tagLink)"> <i class="fa fa-trash-o"></i></button>
-    </li>
-</ul>
-
-<div>
-    <label for="tagTitle">Add tag: </label>
-    <input type="text" id="tagTitle" ng-model="tag.title" autofocus="true">
-</div>
-<input type="submit"
-       ng-click="addTagAndTagLinkToProblem(course.id, course.Exams[0].id, course.Exams[0].Problems[0].id, tag.title)"
-       name="submit"
-       value="Add tag">
-
-
-<h3>Question</h3>
-<div class="problem-img">
-    <img src="/{{course.Exams[0].Problems[0].Question.filename}}" />
+<div ng-if="course.Exams[0].Problems[0].TagLinks.length > 0">
+    <h4>Tags:</h4>
+    <ul class="list-unstyled">
+        <li class="tag-padding" ng-repeat="tagLink in course.Exams[0].Problems[0].TagLinks">
+            <button class="btn btn-xs btn-danger" ng-click="deleteTagLink(tagLink)"> <i class="fa fa-trash-o"></i></button>
+            <a href="#/tags/{{tagLink.Tag.slug}}">{{tagLink.Tag.title}}</a>            
+        </li>
+    </ul>
 </div>
 
-<h3 ng-click="showDetails = ! showDetails">Answer</h3>
-<div class="problem-img" ng-show="course.Exams[0].Problems[0].Answer" >
-    <img ng-show="showDetails" src="/{{course.Exams[0].Problems[0].Answer.filename}}" />
+<form class="form-inline">
+    <button class="btn btn-sm btn-default"
+            type="submit"
+            ng-click="addTagAndTagLinkToProblem(course.id, course.Exams[0].id, course.Exams[0].Problems[0].id, tag.title)"
+            name="submit">
+        Add tag
+    </button>
+    <div class="form-group form-group-sm">
+        <label class="sr-only" for="tagTitle">Add tag: </label>
+        <input class="form-control" ng-model="tag.title" autofocus="true" type="text" id="tagTitle" >
+    </div>
+    
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Question</h3>
+        <div class="problem-img">
+            <img class="question" src="/{{course.Exams[0].Problems[0].Question.filename}}" />
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="course.Exams[0].Problems[0].Answer">
+    <div class="col-md-12">
+        <div class="answer-area">
+            <h3 ng-click="showDetails = ! showDetails">Answer <small>Click to show answer</small></h3>
+            <div class="problem-img" ng-show="course.Exams[0].Problems[0].Answer" >
+                <img class="answer" ng-show="showDetails" src="/{{course.Exams[0].Problems[0].Answer.filename}}" />
+            </div>
+        </div>
+    </div>
+
 </div>

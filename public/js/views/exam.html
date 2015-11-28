@@ -1,17 +1,15 @@
 
 <h2>{{course.name}}: {{course.Exams[0].code}}</h2>
 
-<pre>{{course}}</pre>
-
 <div class="float_left">
     <h3>Problems:</h3>
 
     <ul class="no-dots-list">
         <li ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
-            <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index}}</a>
-            -
-            <span ng-repeat="taglink in problem.TagLinks">
-                <a href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
+            <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index}}{{problem.TagLinks.length > 0 ? ':' : ''}}</a>
+            <span class="shaded" ng-if="problem.TagLinks.length == 0">- Not tagged yet</span>
+            <span ng-if="problem.TagLinks.length > 0" ng-repeat="taglink in problem.TagLinks">
+                <a href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>{{$last ? '' : ', '}}
             </span>
         </li>
     </ul>

@@ -10,7 +10,8 @@
         <!-- <link rel="stylesheet" href="https://gitcdn.xyz/repo/angular/bower-material/master/angular-material.css"> -->
         <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css"> -->
         <link rel="stylesheet" href="./css/main.css">
-        <link rel="stylesheet" href="./angular-material/angular-material.min.css">
+        <!-- <link rel="stylesheet" href="./angular-material/angular-material.min.css"> -->
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic"> -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,900,400italic,500,500italic,700italic,900italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -51,8 +52,43 @@
          }
 
          .problem-img {
-             width: 50%;
+             /* width: 125%;
+                margin-left: -12.5%; */
          }
+
+         .shaded {
+             color: #ccc;
+         }
+
+         .question {
+             width: 100%;
+         }
+
+         .answer {
+             width: 100%;
+         }
+
+         .tag-padding {
+             padding-bottom: 3px;
+         }
+
+         .answer-area {
+             min-height: 500px;
+         }
+
+         /* Custom page footer */
+         .footer {
+             padding-top: 19px;
+             color: #777;
+             border-top: 1px solid #e5e5e5;
+         }
+         
+         .top5 { margin-top:5px; }
+         .top7 { margin-top:7px; }
+         .top10 { margin-top:10px; }
+         .top15 { margin-top:15px; }
+         .top17 { margin-top:17px; }
+         .top30 { margin-top:30px; }
          
          @font-face {
              font-family:"icomoon";
@@ -72,21 +108,48 @@
          }
         </style>
 
-        <div>
-            <a href="#/main">Home</a>
-            <a href="#/courses">Courses</a>            
-        </div>
-        
-        <h1>XMR</h1>
-        
-        <div ng-cloak>
-            <h3>Courses</h3>
+        <header class="site-header">
+            <div class="wrapper">
+                <a class="site-title" href="/#/courses">Xmr</a>
 
-            <div ng-view>
-            </div>    
-        </div>
-        
-        
+                <nav class="site-nav">
+                    <a href="#" class="menu-icon">
+                        <svg viewBox="0 0 18 15">
+                            <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                            <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                            <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                        </svg>
+                    </a>
+
+                    <div class="trigger">
+                        <small>Menu:</small>
+                        <a class="page-link" href="/#/courses">Courses</a>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <div>
+                         <a href="#/main">Home</a>
+                         <a href="#/courses">Courses</a>            
+                         </div> -->
+                    
+                    <!-- <h1>XMR</h1> -->
+                    
+                    <div ng-cloak>
+                        <div ng-view>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer top30">
+                <p>&copy; 2015 Bengt Ericsson <small>All problem questions are owned by Lunds Tekniska H&ouml;gskola</small></p>
+            </footer>
+        </div>        
 
         <script src="./angular/angular.js"></script>
         <script src="./angular-animate/angular-animate.js"></script>
@@ -94,8 +157,11 @@
         <script src="./angular-route/angular-route.js"></script>
 
         <!-- Angular Material Javascript now available via Google CDN; version 0.10 used here -->
-        <script src="./angular-material/angular-material.js"></script>
+        <!-- <script src="./angular-material/angular-material.js"></script> -->
 
+        <script src="./jquery/jquery.min.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+        
         <script src="/js/app.js"></script>
         <script src="/js/CourseController.js"></script>
         <script src="/js/ExamController.js"></script>
