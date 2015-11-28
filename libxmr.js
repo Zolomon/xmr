@@ -56,6 +56,18 @@ var Xmr = (function() {
     var findProblem = options => find(m.Problem, options);
     var destroyProblem = options => destroy(m.Problem, options);
 
+    var createQuestion = options => create(m.Question, options);
+    var updateQuestion = (values, options) => update(m.Question, values, options);
+    var findAllQuestions = options => findAll(m.Question, options);
+    var findQuestion = options => find(m.Question, options);
+    var destroyQuestion = options => destroy(m.Question, options);
+
+    var createAnswer = options => create(m.Answer, options);
+    var updateAnswer = (values, options) => update(m.Answer, values, options);
+    var findAllAnswers = options => findAll(m.Answer, options);
+    var findAnswer = options => find(m.Answer, options);
+    var destroyAnswer = options => destroy(m.Answer, options);
+    
     var createTag = options => create(m.Tag, options);
     var updateTag = (values, options) => update(m.Tag, values, options);
     var findAllTags = options => findAll(m.Tag, options);
@@ -159,6 +171,18 @@ var Xmr = (function() {
         findAllProblems: findAllProblems,
         findProblem: findProblem,
         destroyProblem: destroyProblem,
+
+        createQuestion: createQuestion,
+        updateQuestion: updateQuestion,
+        findAllQuestions: findAllQuestions,
+        findQuestion: findQuestion,
+        destroyQuestion: destroyQuestion,
+
+        createAnswer: createAnswer,
+        updateAnswer: updateAnswer,
+        findAllAnswers: findAllAnswers,
+        findAnswer: findAnswer,
+        destroyAnswer: destroyAnswer,
 
         createTag: createTag,
         updateTag: updateTag, 

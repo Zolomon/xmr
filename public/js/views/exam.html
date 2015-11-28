@@ -7,7 +7,7 @@
     <h3>Problems:</h3>
 
     <ul class="no-dots-list">
-        <li ng-repeat="problem in course.Exams[0].Problems">
+        <li ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
             <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index}}</a>
             -
             <span ng-repeat="taglink in problem.TagLinks">

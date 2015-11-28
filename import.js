@@ -9,6 +9,9 @@ var Sequelize = require('sequelize');
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
 var include = require('./includes.js');
 var xmr = require('./libxmr.js');
+var EventEmitter = require('events').EventEmitter;
+var emitter = new EventEmitter();
+var extend = require('util')._extend;
 
 fs = Promise.promisifyAll(fs);
 
@@ -29,187 +32,195 @@ var options = {
 
 var dirs = ['exams', 'solutions'];
 
-var onError = error => console.log(error);
+var onError = error => emitter.emit('error', error);
 
-new Promise((resolve, reject) => {
-    xmr.findCourse({where: {code: course_code}})
-        .then(course => {
-            console.log('Found: ' + course);
-            console.log('Description: ' + course_title);
+emitter.on('error', error => {
+    console.log(error);
+});
 
-            var context = {};
+emitter.on('create_course', course_code =>
+           xmr.findCourse({where: {code: course_code}})
+           .then(course => {
+               console.log('Found: ' + course);
+               console.log('Description: ' + course_title);
 
-            context.courseCode = course_code;
-            context.courseTitle = course_title;
-            context.courseDir = `${options.basePath}courses/${course_code}/`;
-            context.sqliteCourseDir = `${options.basePathToStoreInSqlite}courses/${course_code}/`;
-            context.examCode = '';
-            context.problemType = '';
-            context.problemIndex = '';
+               var context = {};
 
-            // Create course if it doesn't exist.
-            if (course === null) {
-                xmr.createCourse({code: course_code,
-                                  name: course_title})
-                    .then(newCourse => {
-                        context.course = newCourse;
+               context.courseCode = course_code;
+               context.courseTitle = course_title;
+               context.courseDir = `${options.basePath}courses/${course_code}/`;
+               context.sqliteCourseDir = `${options.basePathToStoreInSqlite}courses/${course_code}/`;
+               context.examCode = '';
+               context.problemType = '';
+               context.problemIndex = '';
 
-                        console.log('Creating course');
+               // Create course if it doesn't exist.
+               if (course === null) {
+                   xmr.createCourse({code: course_code,
+                                     name: course_title})
+                       .then(newCourse => {
+                           context.course = newCourse;
 
-                        resolve(context);
-                    }).catch(reject);
-            }
-            // else {
-            //     // Course exists.
-            //     context.course = course;
+                           console.log('Creating course');
 
-            //     resolve(context);
-            // }
-        });
-})
-    .then(context => {
-        // TODO: Figure out how to cope with new problems in existing exam folders?
-        return new Promise((resolve, reject) => {
+                           emitter.emit('new_course', extend({}, context));
+                       }).catch(onError);
+               }
+               // else {
+               //     // Course exists.
+               //     context.course = course;
 
-            console.log('Creating exam');
+               //     resolve(context);
+               // }
+           })
+          );
 
-            var pathToExams = `${context.courseDir}/exams`;
+emitter.on('new_course', context => {
+    console.log('Creating exam');
 
-            // Find exams
-            fs.readdirAsync(pathToExams)
-                .then(exams => {
-                    console.log(exams);
+    var pathToExams = `${context.courseDir}/exams`;
 
-                    // Resolve new exams, so that we no we'll only create problems
-                    // for new exams
-                    exams.forEach(examCode => {
-                        //var pathToExam = `${pathToExams}/${exam}/`;
-                        //context.pathToExam = pathToExam;
-                        context.examCode = examCode;
+    // Find exams
+    fs.readdirAsync(pathToExams)
+        .then(exams => {
+            console.log(exams);
 
-                        xmr.findExam({where: {code: examCode}})
-                            .then(theExam => {
-                                if (theExam === null) {
-                                    xmr.createExam({code: examCode})
-                                        .then(newExam => {
-                                            newExam.setCourse(context.course);
+            context.exams = exams;
 
-                                            context.exam = newExam;
+            // Resolve new exams, so that we no we'll only create problems
+            // for new exams
+            exams.forEach(examCode => {
+                //var pathToExam = `${pathToExams}/${exam}/`;
+                //context.pathToExam = pathToExam;
+                context.examCode = examCode;
 
-                                            console.log('Created exam: ' + JSON.stringify(context));
+                xmr.findExam({where: {code: examCode}})
+                    .then(theExam => {
+                        if (theExam === null) {
+                            xmr.createExam({code: examCode})
+                                .then(newExam => {
+                                    newExam.setCourse(context.course);
 
-                                            resolve(context);
-                                        })
-                                        .catch(reject);
-                                }
-                                // Only resolve new exams..
-                                // else {
-                                //     context.exam = theExam;
+                                    context.examCode = examCode;
+                                    context.exam = newExam;
 
-                                //     resolve(context);
-                                // }
-                            }).catch(reject);
-                    });
-                }).catch(reject);
-        });
-    })
-    .then(context => {
-        // For every ['exams', 'solutions']
-        // for every every exam
-        //
-        console.log('HEEEEEEEEEEEEELOOOOOOOOOOOOOOOOOO!');
-        console.log(JSON.stringify(context));
+                                    //console.log('Created exam: ' + JSON.stringify(context));
 
-        //dirs.forEach(dir => {
-        var pathToQuestions = `${context.courseDir}/exams/${context.examCode}/`;
-        var pathToSolutions = `${context.courseDir}/solutions/${context.examCode}/`;
-        new Promise((resolve, reject) => {
-            fs.readdirAsync(pathToQuestions)
-                .then(problems => {
+                                    emitter.emit('new_exam', extend({}, context));
+                                }).catch(onError);
+                        }
+                        // Only resolve new exams..
+                        // else {
+                        //     context.exam = theExam;
 
-                    console.log(problems);
-
-                    problems.forEach(problem => {
-
-                        var matches = /(\d+)\.png/.exec(problem);
-                        var index = matches[1];
-
-                        context.index = index;
-                        resolve(context);
-                        //console.log('finding problem');
-
-                    });
-                }).catch(onError);
-        })
-            .then (context => {
-                return new Promise((resolve, reject) => {
-                    console.log('Creating problems');
-                    console.log(JSON.stringify(context));
-
-                    context.pathToQuestions = `${context.courseDir}/exams/${context.examCode}/`;
-                    context.pathToSolutions = `${context.courseDir}/solutions/${context.examCode}/`;
-
-                    xmr.findProblem({where:
-                                     {
-                                         index: context.index,
-                                         ExamId: context.exam.id
-                                     }})
-                        .then(theProblem => {
-                            if (theProblem === null) {
-
-                                console.log('Creating problem');
-                                xmr.createProblem({index: index})
-                                    .then(newProblem => {
-                                        newProblem.setExam(context.exam);
-
-                                        context.problem = newProblem;
-
-                                        resolve(context);
-                                    });
-                            } else {
-                                // Problem already exists...
-                            }
-                        });
-                });
-            })
-            .then(context => {
-                return new Promise((resolve, reject) => {
-                    console.log('Creating questions');
-                    xmr.createQuestion({
-                        filename: `${context.sqliteCourseDir}/exams/${context.examCode}/${context.problem}`
-                    }).then(question => {
-
-                        question.setProblem(context.problem);
-
-                        context.question = question;
-                        context.problemType = 'Q';
-                        console.log('Question created: ' + JSON.stringify(context));
-
-                        resolve(context);                        
+                        //     resolve(context);
+                        // }
                     }).catch(onError);
-                }).catch(onError);
-            }).then(context =>{
-                return new Promise((resolve, reject) => {
-                    console.log('Creating answers');
+            });
+        }).catch(onError);
+});
 
-                    var answerPath = `${context.pathToSolutions}/${context.problem}`;
-                    
-                    if (fs.existsSync(answerPath)) {
+emitter.on('new_exam', context => {
+    // For every ['exams', 'solutions']
+    // for every every exam
+    //
+    console.log('HEEEEEEEEEEEEELOOOOOOOOOOOOOOOOOO!');
+    console.log(JSON.stringify(context));
 
-                        xmr.createAnswer({
-                            filename: `${context.sqliteCourseDir}/exams/${context.examCode}/${context.problem}`
-                        }).then(answer => {
-                            answer.setProblem(context.problem);
+    //dirs.forEach(dir => {
+    var pathToQuestions = `${context.courseDir}/exams/${context.examCode}/`;
+    var pathToSolutions = `${context.courseDir}/solutions/${context.examCode}/`;
 
-                            context.problemType = 'A';
+    fs.readdirAsync(pathToQuestions)
+        .then(problems => {
 
-                            console.log('Answer created: ' + context.toString(context));
-                        }).catch(onError);
-                    } else {
-                        console.log('Answer is missing for: ' + context.toString(context));
-                    }
-                }).catch(onError);
+            console.log(problems);
 
-            }).cath(onError);
+            problems.forEach(problem => {
 
+                var matches = /(\d+)\.png/.exec(problem);
+                var index = matches[1];
+
+                context.problemIndex = index;
+                emitter.emit('new_problem', extend({}, context));
+                //console.log('finding problem');
+
+            });
+        }).catch(onError);
+});
+
+emitter.on('new_problem', context => {
+    console.log('Creating problems');
+    console.log(JSON.stringify(context));
+
+    context.pathToQuestions = `${context.courseDir}exams/${context.examCode}/`;
+    context.pathToSolutions = `${context.courseDir}solutions/${context.examCode}/`;
+
+    xmr.findProblem({where:
+                     {
+                         index: context.problemIndex,
+                         ExamId: context.exam.id
+                     }})
+        .then(theProblem => {
+            if (theProblem === null) {
+
+                console.log('Creating problem');
+                xmr.createProblem({index: context.problemIndex})
+                    .then(newProblem => {
+                        newProblem.setExam(context.exam);
+
+                        context.problem = newProblem;
+
+                        emitter.emit('new_question', extend({},  context));
+                    });
+            } else {
+                // Problem already exists...
+            }
+        });
+});
+
+emitter.on('new_question', context => {
+    console.log('Creating questions');
+    xmr.createQuestion({
+        filename: `${context.sqliteCourseDir}exams/${context.examCode}/${context.problemIndex}.png`
+    }).then(question => {
+
+        question.setProblem(context.problem);
+
+        context.question = question;
+        context.problemType = 'Q';
+        console.log('Question created: ' + JSON.stringify(context));
+
+        emitter.emit('new_answer', extend({}, context));
     }).catch(onError);
+});
+
+emitter.on('new_answer', context => {
+    console.log('Creating answers');
+
+    var answerPath = `${context.pathToSolutions}/${context.problemIndex}.png`;
+
+    if (fs.existsSync(answerPath)) {
+
+        xmr.createAnswer({
+            filename: `${context.sqliteCourseDir}solutions/${context.examCode}/${context.problemIndex}.png`
+        }).then(answer => {
+            answer.setProblem(context.problem);
+
+            context.problemType = 'A';
+
+            context.answer = answer;
+
+            console.log('Answer created: ' + JSON.stringify(context));
+            emitter.emit('done', context);
+        }).catch(onError);
+    } else {
+        console.log('Answer is missing for: ' + JSON.stringify(context));
+    }
+});
+
+emitter.on('done', c => {
+    console.log(`${c.courseCode} ${c.examCode} ${c.problemType}:${c.problemIndex} imported`);
+});
+
+emitter.emit('create_course', course_code);
