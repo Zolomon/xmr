@@ -14,14 +14,18 @@ var xmr = require('./libxmr.js');
 
 var server = jayson.server({
 
-    getExam: (id, callback) => 
-        xmr.findExam({where: {id: id}, include: include.Exams()})
-        .then(exam => callback(null, exam))
-        .catch(err => {
-            console.log(err);
-            callback(err);
-        })
-            ,
+    getExam: (course_id, exam_id, callback) =>
+        {        var inclusion = include.Courses();
+                 inclusion[0].where = {id: exam_id};
+                 
+                 xmr.findCourse({where: {id: course_id}, include: inclusion})
+                 .then(course => callback(null, course))
+                 .catch(err => {
+                     console.log(err);
+                     callback(err);
+                 });
+        }
+    ,
 
     getExams: (courseId, callback) => 
         xmr.findAllExams({where: {courseId: courseId}, include: include.Exams()})            
@@ -127,13 +131,10 @@ var server = jayson.server({
     ,
     destroyTagLink: (id, callback) => 
         xmr.destroyTagLink({where: {id: id}})
-            .then(result => callback(null, {}))
+        .then(result => callback(null, {}))
     ,
 
     addTagAndTagLinkToProblem: (course_id, exam_id, problem_id, tag_title, callback) => {
-        // 1. find or create the tag
-        // 2.
-        console.log('ADDING!!!');
         xmr.findOrCreateTagWithTagLink(course_id, exam_id, problem_id, tag_title)
             .then(tag => {
                 console.log('tag: ' + tag);

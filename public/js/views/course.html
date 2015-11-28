@@ -4,7 +4,7 @@
     <h3>Exams</h3>
     <ol>
         <li ng-repeat="exam in course.Exams | orderBy: 'code'">
-            <a href="#/course/{{course.id}}/exams/{{exam.id}}">
+            <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
                 {{exam.code}}
             </a>
         </li>

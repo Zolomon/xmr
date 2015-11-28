@@ -16,19 +16,14 @@
         };
 
 
-        $scope.addTagAndTagLinkToProblem = (course_id, exam_id, problem_id, tag_title) => {
-            console.log(tag_title);
-            //Promise.all([
+        $scope.addTagAndTagLinkToProblem = (course_id, exam_id, problem_id, tag_title) => {                        
             xmr.addTagAndTagLinkToProblem(course_id, exam_id, problem_id, tag_title)
-                .then(tagLink => {
-                    console.log(tagLink);                    
-                    $scope.course.Exams[0].Problems[0].TagLinks.push(tagLink);}, onError);
-            xmr.getProblem($routeParams.problem_id)
-                .then($scope.onCourse, onError);
-            //]).then(x => {
-            //console.log('yeah!');
+                .then(tagLink => {                                            
+                    xmr.getProblem($routeParams.problem_id)
+                        .then($scope.onCourse, onError);
+                }, onError);
+            
             $scope.tag.title = '';
-            //});
         };
         
         var onError = () => $scope.error = 'Could not fetch problem.';

@@ -7,9 +7,9 @@ var express = require('express'),
     client = jayson.client.http({port: config.rpc.port, hostname: config.rpc.hostname});
 
 /* GET home page. */
-router.get('/api/exams/:exam_id', (req, res) => {
+router.get('/api/courses/:course_id/exams/:exam_id', (req, res) => {
     new Promise((resolve, reject) => {
-        client.request('getExam', [req.params.exam_id], (err, error, response) => {
+        client.request('getExam', [req.params.course_id, req.params.exam_id], (err, error, response) => {
             if (err) {
                 reject(err);
             } else {

@@ -12,7 +12,7 @@
                 templateUrl: 'js/views/course.html',
                 controller: 'CourseController'
             })
-            .when('/courses/:course_id/exam/:exam_id', {
+            .when('/courses/:course_id/exams/:exam_id', {
                 templateUrl: 'js/views/exam.html',
                 controller: 'ExamController'
             })

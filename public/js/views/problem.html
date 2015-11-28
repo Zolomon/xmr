@@ -1,7 +1,5 @@
 <h2>Problem</h2>
 
-<pre>{{course|json}}</pre>
-
 <h4>Tags:</h4>
 <ul>
     <li ng-repeat="tagLink in course.Exams[0].Problems[0].TagLinks">
@@ -9,7 +7,7 @@
         <button ng-click="deleteTagLink(tagLink)"> <i class="fa fa-trash-o"></i></button>
     </li>
 </ul>
-<pre>{{tag|json}}</pre>
+
 <div>
     <label for="tagTitle">Add tag: </label>
     <input type="text" id="tagTitle" ng-model="tag.title" autofocus="true">
@@ -25,7 +23,7 @@
     <img src="/{{course.Exams[0].Problems[0].Question.filename}}" />
 </div>
 
-<h3>Answer</h3>
-<div class="problem-img" ng-show="course.Exams[0].Problems[0].Answer">
-    <img src="/{{course.Exams[0].Problems[0].filename}}" />
+<h3 ng-click="showDetails = ! showDetails">Answer</h3>
+<div class="problem-img" ng-show="course.Exams[0].Problems[0].Answer" >
+    <img ng-show="showDetails" src="/{{course.Exams[0].Problems[0].Answer.filename}}" />
 </div>

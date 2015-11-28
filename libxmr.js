@@ -106,8 +106,6 @@ var Xmr = (function() {
                         var c = course[0];
                         var e = c.Exams[0];
                         var p = e.Problems[0];
-
-                        console.log(JSON.stringify(newTag));
                         
                         newTag.tag.setCourse(c);
                         newTag.tag.setExam(e);
@@ -136,9 +134,7 @@ var Xmr = (function() {
                                 resolve(tagLink);
                                 
                             }).catch(reject);
-                        }).catch(reject);                    
-                    
-                    //resolve(newTag.tag);
+                        }).catch(reject); 
                 }
             });
     });

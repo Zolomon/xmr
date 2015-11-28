@@ -1,8 +1,8 @@
 /*global angular*/
 (function () {
     var xmr = ($http) => {
-        var getExam = id =>
-            $http.get('/api/exams/' + id)
+        var getExamAsCourse = (course_id, exam_id) =>
+            $http.get(`/api/courses/${course_id}/exams/${exam_id}`)
             .then( response =>response.data);
 
 
@@ -11,25 +11,24 @@
             .then(response => response.data);
 
         var getCourse = id =>
-            $http.get('/api/courses/' + id)
+            $http.get(`/api/courses/${id}`)
             .then(response =>response.data);
 
 
         var getProblemsWithTag = tag_slug =>
-            $http.get('/api/tags/' + tag_slug)
+            $http.get(`/api/tags/${tag_slug}`)
             .then(response => response.data);
 
         var getProblem = id =>
-            $http.get('/api/problems/' + id)
+            $http.get(`/api/problems/${id}`)
             .then(response => response.data);
 
         var updateTag = tag => 
-            $http.put('/api/tags/' + tag.id, tag)
+            $http.put(`/api/tags/${tag.id}`, tag)
             .then(response => response.data);
 
         var deleteTagLink = taglink_id => {
-            console.log('deleting it');
-            $http.delete('/api/taglinks/' + taglink_id)
+            $http.delete(`/api/taglinks/${taglink_id}`)
                 .then(response => response.data);
         };
 
@@ -43,7 +42,7 @@
             .then(response => response.data);
 
         return {
-            getExam: getExam,
+            getExamAsCourse: getExamAsCourse,
             getCourses: getCourses,
             getCourse: getCourse,
             getProblemsWithTag: getProblemsWithTag,
