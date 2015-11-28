@@ -3,8 +3,10 @@
     var app = angular.module('xmr');
 
     var CourseController = ($scope, $routeParams, xmr) => {
-        var onCourses = data => $scope.courses = data;
+        var onCourses = data => $scope.courses = data;       
 
+        $scope.toDate = date => xmr.toDate(date);            
+                
         var onCourse = data => {
             $scope.course = data;
 

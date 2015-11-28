@@ -9,7 +9,8 @@
         var onExam = data => $scope.exam = data[0];       
 
         var onError = () => $scope.error = 'Could not fetch exams';
-        
+
+        $scope.toDate = date => xmr.toDate(date);
 
         var courseIdIsValid = $routeParams.course_id !== undefined && Number($routeParams.course_id) > 0;
         var examIdIsValid = $routeParams.exam_id !== undefined && Number($routeParams.exam_id) > 0;

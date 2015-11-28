@@ -41,6 +41,11 @@
             })
             .then(response => response.data);
 
+        var toDate = date => {
+            var pattern = /(\d{4})(\d{2})(\d{2})/;
+            return new Date(date.replace(pattern, '$1-$2-$3'));
+        };
+        
         return {
             getExamAsCourse: getExamAsCourse,
             getCourses: getCourses,
@@ -49,7 +54,8 @@
             getProblem: getProblem,
             updateTag: updateTag,
             addTagAndTagLinkToProblem: addTagAndTagLinkToProblem,
-            deleteTagLink: deleteTagLink
+            deleteTagLink: deleteTagLink,
+            toDate: toDate
         };
     };
 

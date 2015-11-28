@@ -1,4 +1,6 @@
-<h2 class="shaded">{{course.code}}: {{course.Exams[0].code}} - Problem {{course.Exams[0].Problems[0].index}}</h2>
+<a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}">Back to '{{course.code}}: {{course.Exams[0].code}}'</a>
+
+<h2><smaller class="shaded">{{course.code}} → {{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</smaller> → Problem {{course.Exams[0].Problems[0].index + 1}}</h2>
 
 <div ng-if="course.Exams[0].Problems[0].TagLinks.length > 0">
     <h4>Tags:</h4>

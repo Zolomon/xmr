@@ -1,4 +1,4 @@
-<h2>Courses</h2>
+<h2>Courses <small class="shaded">Select a course for study</small></h2>
 <ul>
     <li ng-repeat="course in courses | orderBy: 'code'">
         <span>({{course.Exams.length}})</span>&nbsp;
@@ -7,4 +7,3 @@
         </a>
     </li>
 </ul>
-<a href="#/main">Back to search</a>

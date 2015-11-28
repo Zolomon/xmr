@@ -1,11 +1,13 @@
-<h2>{{course.code}}: {{course.name}}</h2>
+<a href="#/courses">Back to 'courses'</a>
+
+<h2>{{course.name}} → <smaller class="shaded">{{course.code}}<smaller></h2>
 
 <div class="float_left">
     <h3>Exams</h3>
     <ol>
         <li ng-repeat="exam in course.Exams | orderBy: 'code'">
             <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
-                {{exam.code}}
+                {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
             </a>
         </li>
     </ol>

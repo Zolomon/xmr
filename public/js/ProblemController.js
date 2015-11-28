@@ -25,6 +25,8 @@
             
             $scope.tag.title = '';
         };
+
+        $scope.toDate = date => xmr.toDate(date);
         
         var onError = () => $scope.error = 'Could not fetch problem.';
 

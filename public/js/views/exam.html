@@ -1,12 +1,13 @@
+<a href="#/courses/{{course.id}}">Back to '{{course.code}}'</a>
 
-<h2>{{course.name}}: {{course.Exams[0].code}}</h2>
+<h2><smaller class="shaded">{{course.name}}</smaller> → {{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</h2>
 
 <div class="float_left">
-    <h3>Problems:</h3>
+    <h3>Problems <small class="shaded">Select a problem</small></h3>
 
     <ul class="no-dots-list">
         <li ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
-            <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index}}{{problem.TagLinks.length > 0 ? ':' : ''}}</a>
+            # <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index + 1}}</a>{{problem.TagLinks.length > 0 ? ':' : ''}}
             <span class="shaded" ng-if="problem.TagLinks.length == 0">- Not tagged yet</span>
             <span ng-if="problem.TagLinks.length > 0" ng-repeat="taglink in problem.TagLinks">
                 <a href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>{{$last ? '' : ', '}}

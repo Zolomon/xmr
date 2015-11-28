@@ -1,14 +1,19 @@
 <a href="#/courses/{{tag.course[0].id}}">Back to '{{tag.course[0].name}}'</a>
-<h1>{{tag.title}}</h1>
 
-<h2>Tag: {{tag.tag.title}}</h2>
+<h2>{{tag.title}}</h2>
 
-<div>
-    <label for="tagTitle">Tag title: </label>
-    <input type="text" id="tagTitle" ng-model="tag.tag.title">
-</div>
-<input type="submit" ng-click="updateTagName(tag.tag.title)" name="submit" value="Update name" autofocus="true" >
+<h3>Tag: {{tag.tag.title}}</h3>
 
+<form class="form-inline">
+    <button class="btn btn-default btn-sm" type="submit" ng-click="updateTagName(tag.tag.title)" name="submit">
+        Update name
+    </button>
+    <div class="form-group form-group-sm">
+        <label class="sr-only" for="tagTitle">Tag title: </label>        
+        <input class="form-control" type="text" id="tagTitle" ng-model="tag.tag.title">
+    </div>
+
+</form>
 <h3>Problems</h3>
 
 <div ng-repeat="course in tag.course">
