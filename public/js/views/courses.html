@@ -1,9 +1,15 @@
-<h2>Courses <small class="shaded">Select a course for study</small></h2>
-<ul>
-    <li ng-repeat="course in courses | orderBy: 'code'">
-        <span>({{course.Exams.length}})</span>&nbsp;
-        <a href="#/courses/{{course.id}}">
-            {{course.code}}: {{course.name}}
-        </a>
-    </li>
-</ul>
+
+<h2>Courses <small class="shaded">Select a course to study</small></h2>
+<div class="col-md-4">
+    <ul class="list-unstyled pull-left">
+        <li ng-repeat="course in courses | orderBy: 'code'">
+            <smaller class="shaded pull-right">{{course.code}}</smaller>
+        </li>
+    </ul>
+    <ul class="list-unstyled pull-right no-margin-left">
+        <li ng-repeat="course in courses | orderBy: 'code'">
+            <a href="#/courses/{{course.id}}">{{course.name}}</a>
+            <smaller class="shaded">{{course.Exams.length}} exams</smaller>
+        </li>
+    </ul>
+</div>

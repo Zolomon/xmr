@@ -2,22 +2,22 @@
 
 <h2>{{course.name}} → <smaller class="shaded">{{course.code}}<smaller></h2>
 
-<div class="float_left">
-    <h3>Exams</h3>
-    <ol>
-        <li ng-repeat="exam in course.Exams | orderBy: 'code'">
-            <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
-                {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
-            </a>
-        </li>
-    </ol>
-</div>
+    <div class="float_left">
+        <h3>Exams</h3>
+        <ol>
+            <li ng-repeat="exam in course.Exams | orderBy: 'code'">
+                <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
+                    {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
+                </a>
+            </li>
+        </ol>
+    </div>
 
-<div class="float_left">
-    <h3>Tags</h3>
-    <ul class="no-dots-list">
-        <li ng-repeat="tag in tagLinks">        
-            <a href="#/tags/{{tag[0].Tag.slug}}">{{tag[0].Tag.title}}</a> <span>{{tag.length}}</span>
-        </li>
-    </ul>
-</div>
+    <div class="float_left">
+        <h3>Tags</h3>
+        <ul class="list-unstyled">
+            <li class="bot10" ng-repeat="tag in tagLinks">        
+                <a class="tag-border-md" href="#/tags/{{tag[0].Tag.slug}}">{{tag[0].Tag.title}}</a> <span>{{tag.length}}</span>
+            </li>
+        </ul>
+    </div>
