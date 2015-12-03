@@ -19,7 +19,7 @@
 <div ng-repeat="course in data.problems">
     <ul class="list-unstyled no-space-bottom" ng-repeat="exam in course.Exams">
         <li class="bot7" ng-repeat="problem in exam.Problems">
-            <a href="#/courses/{{tag.course[0].id}}/exams/{{exam.id}}/problems/{{problem.id}}">{{problem.id}}</a>
+            <a href="#/courses/{{data.course[0].id}}/exams/{{exam.id}}/problems/{{problem.id}}">{{problem.id}}</a>
             &nbsp;
             <span>
                 <a class="tag-border-md highlighted"
