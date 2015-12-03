@@ -76,6 +76,8 @@ var server = jayson.server({
                 console.log(err);
                 callback(err);
             });
+
+        
         
         var resultTag = xmr.findTag({where: {
             slug: tag_slug
@@ -87,11 +89,32 @@ var server = jayson.server({
         var result = Promise.all([resultCourse, resultTag]);
         
         result.then(data => {
+            
             var result = {
                 course: data[0],
                 tag: data[1]
             };
-            callback (null, result);
+
+            var problems = [];
+            result.course[0].Exams.forEach(e => {                
+                e.Problems.forEach(p => {
+                    problems.push(p.id);
+                });
+            });
+
+            var problemInclusion = include.Courses();
+            problemInclusion[0].include[0].where = {id: { $or: problems}};
+            
+            var resultProblems =
+                xmr.findAllCourses({include: problemInclusion})
+                .catch(err => {
+                    console.log(err);
+                    callback(err);
+                }).then(course => {
+                    result.problems = course;
+                    
+                    callback(null, result);
+                });
         }).catch(err => {
             console.log(err);
             callback(err);

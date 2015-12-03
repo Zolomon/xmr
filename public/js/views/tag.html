@@ -1,6 +1,6 @@
-<a href="#/courses/{{tag.course[0].id}}">Back to '{{tag.course[0].name}}'</a>
+<a href="#/courses/{{data.course[0].id}}">{{data.course[0].name}}</a>
 
-<h2>{{tag.title}}</h2>
+<h2>{{tag.tag.title}}</h2>
 
 <h3>Tag: {{tag.tag.title}}</h3>
 
@@ -16,13 +16,21 @@
 </form>
 <h3>Problems</h3>
 
-<div ng-repeat="course in tag.course">
-    <ul ng-repeat="exam in course.Exams" class="inline-list">
-        <li ng-repeat="problem in exam.Problems" class="inline-list">
+<div ng-repeat="course in data.problems">
+    <ul class="list-unstyled no-space-bottom" ng-repeat="exam in course.Exams">
+        <li class="bot7" ng-repeat="problem in exam.Problems">
             <a href="#/courses/{{tag.course[0].id}}/exams/{{exam.id}}/problems/{{problem.id}}">{{problem.id}}</a>
             &nbsp;
+            <span>
+                <a class="tag-border-md highlighted"
+                   href="#/tags/{{data.tag.slug}}">{{data.tag.title}}</a>
+            </span>
+            <span ng-repeat="taglink in problem.TagLinks | filter: filterFunction | orderBy: 'title'">
+                <a class="tag-border-md {{taglink.Tag.slug == data.tag.slug ? 'highlighted' : ''}}"
+                   href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
+            </span>
         </li>
-    </ul>
+    </ul>    
 </div>
 
 

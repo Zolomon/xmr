@@ -5,7 +5,7 @@
 
     var TagController = function($scope, $routeParams, xmr) {
 
-        var onTag = data => $scope.tag = data; 
+        var onTag = data => $scope.data = data; 
 
         $scope.updateTagName = newName => {
             $scope.tag.tag.title = newName;            
@@ -17,6 +17,9 @@
         var onError = () => {
             $scope.error = 'Could not fetch problems.';
         };
+
+        $scope.filterFunction = element => 
+            $scope.data.tag.title != element.Tag.title;
         
         if ($routeParams.tag_slug !== undefined) {
             xmr.getProblemsWithTag($routeParams.tag_slug)
