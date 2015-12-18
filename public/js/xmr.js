@@ -45,6 +45,10 @@
             var pattern = /(\d{4})(\d{2})(\d{2})/;
             return new Date(date.replace(pattern, '$1-$2-$3'));
         };
+
+        var getTagsFromCourse = courseId => 
+            $http.get(`/api/courses/${courseId}/tags`)
+                .then(response => response.data);        
         
         return {
             getExamAsCourse: getExamAsCourse,
@@ -55,7 +59,8 @@
             updateTag: updateTag,
             addTagAndTagLinkToProblem: addTagAndTagLinkToProblem,
             deleteTagLink: deleteTagLink,
-            toDate: toDate
+            toDate: toDate,
+            getTagsFromCourse: getTagsFromCourse
         };
     };
 

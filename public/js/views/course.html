@@ -9,6 +9,7 @@
                 <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
                     {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
                 </a>
+                <small class="shaded" ng-if="isMissingTags(exam)">({{nbrOfProblemsWithoutTags(exam)}} p. left)</small>
             </li>
         </ol>
     </div>

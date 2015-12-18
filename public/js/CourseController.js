@@ -22,6 +22,21 @@
         var onCourses = data => $scope.courses = data;       
 
         $scope.toDate = date => xmr.toDate(date);            
+
+        $scope.isMissingTags = exam => {
+            return $scope.nbrOfProblemsWithoutTags(exam) > 0;
+        };
+
+        $scope.nbrOfProblemsWithoutTags = exam => {
+            var result = 0;
+            for (var i = 0; i < exam.Problems.length; i++) {
+                if (exam.Problems[i].TagLinks.length == 0) {
+                    result += 1;
+                }
+            }
+
+            return result;
+        };
         
         var onCourse = data => {
             $scope.course = data;

@@ -9,34 +9,19 @@ var Xmr = (function() {
     var slugify = require('slug');      
 
     var create = (model, options) => 
-        // new Promise((resolve, reject) => 
         model.create(options);
-    // .then(resolve)
-    // .catch(reject));
 
     var findAll = (model, options) =>
-        // new Promise((resolve, reject) =>
         model.findAll(options);
-    // .then(resolve)
-    // .catch(reject));
     
     var find = (model, options) =>
-        // new Promise((resolve, reject) =>
         model.find(options);
-    // .then(resolve)
-    // .catch(reject));
 
     var destroy = (model, options) =>
-        // new Promise((resolve, reject) =>
         model.destroy(options);
-    // .then(resolve)
-    // .catch(reject));
 
     var update = (model, values,  options) =>
-        // new Promise((resolve, reject) =>
         model.update(values, options);
-    // .then(resolve)
-    // .catch(reject));
     
     var createCourse = options => create(m.Course, options);
     var updateCourse = (values, options) => update(m.Course, values, options);

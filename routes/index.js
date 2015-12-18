@@ -50,6 +50,19 @@ router.get('/api/courses/:course_id', (req, res) => {
         .catch(err => res.send(err));
 });
 
+router.get('/api/courses/:course_id/tags', (req, res) => {
+    new Promise((resolve, reject) => {
+        client.request('getTagsFromCourse', [req.params.course_id], (err, error, response) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(response);
+            }
+        });
+    }).then(response => res.send(response))
+        .catch(err => res.send(err));
+});
+
 router.get('/api/tags/:tag_slug', (req, res) => {
     new Promise((resolve, reject) => {
         client.request('getProblemsWithTag', [req.params.tag_slug], (err, error, response) => {

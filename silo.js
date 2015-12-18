@@ -9,6 +9,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 var include = require('./includes.js');
 var slugify = require('slug');
 var xmr = require('./libxmr.js');
+var _  = require('lodash');
 
 //xmr.findProblem({where: {id: 329}}).then(x => console.log(x));
 
@@ -166,7 +167,36 @@ var server = jayson.server({
                 console.log(err);
                 callback(err);
             });
-    }    
+    },
+
+    getTagsFromCourse: (course_id, callback) => {
+        var includeWhere = include.Courses();        
+        xmr.findCourse({where: {id: course_id},
+                        include: includeWhere})
+            .then(course => {
+                var tags = [];
+                for(var i = 0; i < course.Exams.length; i++) {
+                    for (var j = 0; j < course.Exams[i].Problems.length; j++) {
+                        for(var k = 0; k < course.Exams[i].Problems[j].TagLinks.length; k++) {
+                            var t = course.Exams[i].Problems[j].TagLinks[k].Tag;
+                            var found = false;
+                            if (!_.find(tags, function (x) {
+                                return this.title === x.title;
+                            }, t))
+                            {
+                                tags.push(t);
+                            }
+                        }
+                    }
+                }
+                
+                callback(null, tags);                
+            })
+            .catch(err => {
+                console.log(err);
+                callback(err);
+            });
+    }
 });
 console.log(config.rpc.port);
 

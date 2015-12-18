@@ -1,6 +1,6 @@
 /*global angular*/
 (function() {
-    var xmr = angular.module('xmr', ['ngRoute']);
+    var xmr = angular.module('xmr', ['ngRoute', 'angular.filter']);
 
     xmr.config(function ($routeProvider) {
         $routeProvider

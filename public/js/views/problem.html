@@ -9,7 +9,7 @@
     <ul class="list-unstyled">
         <li class="tag-padding" ng-repeat="tagLink in course.Exams[0].Problems[0].TagLinks">
             <button class="btn btn-xs btn-danger" ng-click="deleteTagLink(tagLink)"> <i class="fa fa-trash-o"></i></button>
-            <a class="tag-border" href="#/tags/{{tagLink.Tag.slug}}">{{tagLink.Tag.title}}</a>            
+            <a class="tag-border-md" href="#/tags/{{tagLink.Tag.slug}}">{{tagLink.Tag.title}}</a>            
         </li>
     </ul>
 </div>
@@ -23,9 +23,14 @@
     </button>
     <div class="form-group form-group-sm">
         <label class="sr-only" for="tagTitle">Add tag: </label>
-        <input class="form-control" ng-model="tag.title" autofocus="true" type="text" id="tagTitle" >
+        <input class="form-control" ng-focus="isFocus = true" ng-blur="isFocus = false" ng-model="tag.title" type="text" id="tagTitle" >
     </div>
-    
+    <ul class="list-unstyled">
+        <li class="tag-padding" ng-repeat="t in tags | fuzzyBy: 'title': tag.title" ng-show="isFocus === true">
+            <a><small class="tag-border-md bot7" ng-mousedown="tag.title = t.title">{{t.title}}</small></a>
+        </li>
+    </ul>
+    <!-- fuzzyBy with div using angular-filter -->
 </form>
 
 <div class="row">

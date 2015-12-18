@@ -27,6 +27,10 @@
         };
 
         $scope.toDate = date => xmr.toDate(date);
+
+        $scope.onTags = data => {                
+                $scope.tags = data;
+            };
         
         var onError = () => $scope.error = 'Could not fetch problem.';
 
@@ -36,6 +40,9 @@
             xmr.getProblem($routeParams.problem_id)
                 .then($scope.onCourse, onError);
 
+            xmr.getTagsFromCourse($routeParams.course_id)
+                .then($scope.onTags, onError);
+            
             $scope.tag = {title: ''};
         }
     };
