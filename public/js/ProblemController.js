@@ -4,8 +4,7 @@
     var app = angular.module('xmr');
 
     var ProblemController = ($scope, $routeParams, xmr) => {
-        $scope.onCourse = data =>
-            $scope.course = data;
+        $scope.onCourse = data => $scope.course = data;
 
         $scope.deleteTagLink = tagLink => {
             console.log($scope.course.Exams[0].Problems[0]);
@@ -28,9 +27,7 @@
 
         $scope.toDate = date => xmr.toDate(date);
 
-        $scope.onTags = data => {                
-                $scope.tags = data;
-            };
+        $scope.onTags = data => $scope.tags = data;
         
         var onError = () => $scope.error = 'Could not fetch problem.';
 
