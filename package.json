@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "browser-sync": "^2.9.12",
+    "console-stamp": "^0.2.0",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.0.0",
     "karma": "^0.13.15",

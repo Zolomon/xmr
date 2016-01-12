@@ -10,6 +10,7 @@ var include = require('./includes.js');
 var slugify = require('slug');
 var xmr = require('./libxmr.js');
 var _  = require('lodash');
+require('console-stamp')(console, {pattern: 'yyyy-mm-dd HH:MM:ss.l'});
 
 //xmr.findProblem({where: {id: 329}}).then(x => console.log(x));
 
