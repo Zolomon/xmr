@@ -5,7 +5,7 @@
     <div class="float_left right30">
         <h3>Exams <small class="shaded">Select an exam, or </small></h3>
         <ol>
-            <li ng-repeat="exam in course.Exams | orderBy: 'code'">
+            <li ng-repeat="exam in course.Exams | orderBy: '-code'">
                 <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
                     {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
                 </a>

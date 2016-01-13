@@ -9,9 +9,9 @@
 
         <!-- <link rel="stylesheet" href="https://gitcdn.xyz/repo/angular/bower-material/master/angular-material.css"> -->
         <!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css"> -->
-        <link rel="stylesheet" href="./css/main.css">
         <!-- <link rel="stylesheet" href="./angular-material/angular-material.min.css"> -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/main.css">
         <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic"> -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,900,400italic,500,500italic,700italic,900italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -135,29 +135,35 @@
          .no-margin-left {
              margin-left: 0 !important;
          }
-         
-         @font-face {
-             font-family:"icomoon";
-             src:url("https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.eot");
-             font-weight:normal;
-             font-style:normal;
+
+         .swish-small {
+             margin-left: 20px;
+             font-size: 15px;
+             margin-top: 3px;
+             letter-spacing: normal;
          }
-         @font-face {
-             font-family: 'icomoon';
-             src:url('https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.eot?-cmq1um');
-             src:url('https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.eot?#iefix-cmq1um') format('embedded-opentype'),
-             url('https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.woff?-cmq1um') format('woff'),
-             url('https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.ttf?-cmq1um') format('truetype'),
-             url('https://cdn.rawgit.com/angular/material/master/docs/app/fonts/icomoon.svg?-cmq1um#icomoon') format('svg');
-             font-weight: normal;
-             font-style: normal;
+
+         .swish-link {
+             color: #f2f2f2;
          }
+
+         .swish-link:hover {
+             color: #f2f2f2;
+         }
+
+         .swish-coffee {
+             height: 15px;
+             margin-top: -3px;
+             margin-left: 2px;             
+         }         
         </style>
 
         <header class="site-header">
             <div class="wrapper">
                 <a class="site-title" href="/#/courses">Xmr</a>
-
+                <small class="site-title swish-small">
+                    Like this? <a class="swish-link" href="swish://">Swish a surprise coffee <img src="http://emojione.com/wp-content/uploads/assets/emojis/2615.svg" alt="hot beverage" class="swish-coffee"> to me at</a>&nbsp;0761677760 ! :-)
+                </small>
                 <nav class="site-nav">
                     <a href="#" class="menu-icon">
                         <svg viewBox="0 0 18 15">
@@ -206,8 +212,6 @@
         <script src="./angular-route/angular-route.js"></script>
         <script src="./angular-filter/angular-filter.js"></script>
         
-        <!-- Angular Material Javascript now available via Google CDN; version 0.10 used here -->
-        <!-- <script src="./angular-material/angular-material.js"></script> -->
 
         <script src="./jquery/jquery.min.js"></script>
         <script src="./bootstrap/js/bootstrap.min.js"></script>
