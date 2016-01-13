@@ -65,8 +65,11 @@ emitter.on('create_course', course_code =>
                            emitter.emit('new_course', extend({}, context));
                        })
                        .catch(onError);
-               }
-               // Course already exists...
+               } else {
+                   // Course already exists...
+                   context.course = course;
+                   emitter.emit('new_course', extend({}, context));
+               }               
            })
           );
 
@@ -95,16 +98,21 @@ emitter.on('new_course', context => {
 
                                     emitter.emit('new_exam', extend({}, context));
                                 }).catch(onError);
+                        } else {
+                            // Exam already exists...
+                            context.examCode = examCode;
+                            context.exam = theExam;
+
+                            emitter.emit('new_exam', extend({}, context));
                         }
-                        // Exam already exists...
                     }).catch(onError);
             });
         }).catch(onError);
 });
 
 emitter.on('new_exam', context => {
-    var pathToQuestions = `${context.courseDir}/exams/${context.examCode}/`;
-    var pathToSolutions = `${context.courseDir}/solutions/${context.examCode}/`;
+    var pathToQuestions = `${context.courseDir}exams/${context.examCode}/`;
+    var pathToSolutions = `${context.courseDir}solutions/${context.examCode}/`;
 
     fs.readdirAsync(pathToQuestions)
         .then(problems => {
@@ -115,6 +123,7 @@ emitter.on('new_exam', context => {
                 var index = matches[1];
 
                 context.problemIndex = index;
+                
                 emitter.emit('new_problem', extend({}, context));
             });
         }).catch(onError);
