@@ -10,9 +10,16 @@ from time import sleep
 # modified with custom destination
 def download_file(url, local_path):
     local_filename = url.split('/')[-1]
-    # NOTE the stream=True parameter    
-    destination_file = os.path.join(local_path, local_filename)
+    
+    destination_dir = os.path.join(local_path, os.path.splitext(os.path.basename(local_filename))[0])
+    
+    if not os.path.exists(destination_dir):
+        os.makedirs(destination_dir)
+        
+    destination_file = os.path.join(destination_dir, local_filename)
+    
     if not os.path.exists(destination_file):
+        # NOTE the stream=True parameter    
         r = requests.get(url, stream=True)
         with open(destination_file, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024): 
