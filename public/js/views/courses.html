@@ -1,5 +1,5 @@
-<h2>Courses <small class="shaded">Select a course to study</small></h2>
 <div class="col-md-5">
+    <h2>Courses <small class="shaded">Select a course to study</small></h2>
     <ul class="list-unstyled pull-left">
         <li ng-repeat="course in courses | orderBy: 'code'">
             <smaller class="shaded pull-right">{{course.code}}</smaller>
@@ -10,5 +10,12 @@
             <a href="#/courses/{{course.id}}">{{course.name}}</a>
             <smaller class="shaded">{{course.Exams.length}} exams</smaller>
         </li>
+    </ul>
+</div>
+<div class="col-md-5">
+    <h1>News</h1>
+    <ul class="list-unstyled">
+        <li>2016-01-16: Added a news section</li>
+        <li>2016-01-15: Downtime due to computer crash</li>
     </ul>
 </div>

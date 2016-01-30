@@ -1,0 +1,119 @@
+.float_left {
+             display: inline-block;
+             float: left;
+         }
+
+         .inline-list {
+             display: inline;
+             list-style-type: none;
+         }
+
+         .no-dots-list {
+             list-style-type: none;
+         }
+
+         .problem-img {
+             /* width: 125%;
+                margin-left: -12.5%; */
+         }
+
+         .shaded {
+             color: #ccc;
+         }
+
+         .question {
+             width: 100%;
+         }
+
+         .answer {
+             width: 100%;
+         }
+
+         .tag-padding {
+             padding-bottom: 3px;
+         }
+
+         .answer-area {
+             min-height: 500px;
+         }
+
+         /* Custom page footer */
+         .footer {
+             padding-top: 19px;
+             color: #777;
+             border-top: 1px solid #e5e5e5;
+         }
+
+         .tag-border-md:hover {
+             /* left: -2px;
+                top: -2px;
+                position: relative; */
+             box-shadow: 0.5px 0.5px 1px #000;
+             border-bottom: 3px solid #ccc;
+         }
+         
+         .tag-border-md {
+             color: #333;
+             padding: 3px 3px;
+             font-size: 13px;
+             background-color: #f3f3f3;
+             box-shadow: 0.5px 0.5px 3px #999;
+             margin-right: 3px;
+             margin-bottom: 3px;
+         }
+
+         .no-space-bottom {
+             padding-bottom: 0;
+             margin-bottom: 0;
+         }
+
+         .highlighted {
+             background-color: #fdfdfd;
+         }
+
+         .right5 { margin-y:5px; }
+         .right7 { margin-right:7px; }
+         .right10 { margin-right:10px; }
+         .right15 { margin-right:15px; }
+         .right17 { margin-right:17px; }
+         .right30 { margin-right:30px; }
+         .right50 { margin-right:50px; }
+         
+         .top5 { margin-top:5px; }
+         .top7 { margin-top:7px; }
+         .top10 { margin-top:10px; }
+         .top15 { margin-top:15px; }
+         .top17 { margin-top:17px; }
+         .top30 { margin-top:30px; }
+
+         .bot5 { margin-bottom:5px; }
+         .bot7 { margin-bottom:7px; }
+         .bot10 { margin-bottom:10px; }
+         .bot15 { margin-bottom:15px; }
+         .bot17 { margin-bottom:17px; }
+         .bot30 { margin-bottom:30px; }
+
+         .no-margin-left {
+             margin-left: 0 !important;
+         }
+
+         .swish-small {
+             margin-left: 20px;
+             font-size: 15px;
+             margin-top: 3px;
+             letter-spacing: normal;
+         }
+
+         .swish-link {
+             color: #f2f2f2;
+         }
+
+         .swish-link:hover {
+             color: #f2f2f2;
+         }
+
+         .swish-coffee {
+             height: 15px;
+             margin-top: -3px;
+             margin-left: 2px;             
+         }         

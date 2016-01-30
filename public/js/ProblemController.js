@@ -35,7 +35,7 @@
             Number($routeParams.problem_id) > 0)
         {
             xmr.getProblem($routeParams.problem_id)
-                .then($scope.onCourse, onError);
+                .then($scope.onCourse, onError);            
 
             xmr.getTagsFromCourse($routeParams.course_id)
                 .then($scope.onTags, onError);
