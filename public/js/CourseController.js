@@ -17,11 +17,11 @@
                 return num;
             };
         });
-    
-    var CourseController = ($scope, $routeParams, xmr) => {
-        var onCourses = data => $scope.courses = data;       
 
-        $scope.toDate = date => xmr.toDate(date);            
+    var CourseController = function($scope, $routeParams, xmr) {
+         var onCourses = data => $scope.courses = data;
+
+        $scope.toDate = date => xmr.toDate(date);
 
         $scope.isMissingTags = exam => {
             return $scope.nbrOfProblemsWithoutTags(exam) > 0;
@@ -37,7 +37,7 @@
 
             return result;
         };
-        
+
         var onCourse = data => {
             $scope.course = data;
 
@@ -80,6 +80,6 @@
         }
     };
 
-    app.controller('CourseController', ['$scope', '$routeParams', 'xmr',
+  app.controller('CourseController', ['$scope', '$routeParams', 'xmr',
                                         CourseController]);
 }());

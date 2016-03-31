@@ -23,7 +23,7 @@
             $http.get(`/api/problems/${id}`)
             .then(response => response.data);
 
-        var updateTag = tag => 
+        var updateTag = tag =>
             $http.put(`/api/tags/${tag.id}`, tag)
             .then(response => response.data);
 
@@ -46,10 +46,10 @@
             return new Date(date.replace(pattern, '$1-$2-$3'));
         };
 
-        var getTagsFromCourse = courseId => 
+        var getTagsFromCourse = courseId =>
             $http.get(`/api/courses/${courseId}/tags`)
-                .then(response => response.data);        
-        
+                .then(response => response.data);
+
         return {
             getExamAsCourse: getExamAsCourse,
             getCourses: getCourses,
