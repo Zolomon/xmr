@@ -1,21 +1,28 @@
 <div class="col-md-5">
-    <h2>Courses <small class="shaded">Select a course to study</small></h2>
-    <ul class="list-unstyled pull-left">
-        <li ng-repeat="course in courses | orderBy: 'code'">
-            <smaller class="shaded pull-right">{{course.code}}</smaller>
-        </li>
-    </ul>
-    <ul class="list-unstyled pull-right no-margin-left">
-        <li ng-repeat="course in courses | orderBy: 'code'">
-            <a href="#/courses/{{course.id}}">{{course.name}}</a>
-            <smaller class="shaded">{{course.Exams.length}} exams</smaller>
-        </li>
-    </ul>
+  <h2>Courses <small class="shaded">Select a course to study</small></h2>
+  <ul class="list-unstyled pull-left">
+    <li ng-repeat="course in courses | orderBy: 'code'">
+      <smaller class="shaded pull-right">{{course.code}}</smaller>
+    </li>
+  </ul>
+  <ul class="list-unstyled pull-right no-margin-left">
+    <li ng-repeat="course in courses | orderBy: 'code'">
+      <a href="#/courses/{{course.id}}">{{course.name}}</a>
+      <smaller class="shaded">{{course.Exams.length}} exams</smaller>
+    </li>
+  </ul>
 </div>
 <div class="col-md-5">
-    <h1>News</h1>
-    <ul class="list-unstyled">
-        <li>2016-01-16: Added a news section</li>
-        <li>2016-01-15: Downtime due to computer crash</li>
-    </ul>
+  <h1>News</h1>
+  <ul class="list-unstyled">
+    <li>2016-04-06: Moved to <a href="http://xmr.zl.nu">http://xmr.zl.nu</a></li>
+    <li>2016-01-16: Added a news section</li>
+    <li>2016-01-15: Downtime due to computer crash</li>
+  </ul>
+
+  <h4>General info</h4>
+  <p class="small">The courses might take a few moments to load depending on how many concurrent users there are.</p>
+  <p class="small">At the moment it does <strong>not</strong> work on mobile phones.</p>
+  <p class="small">Please be patient! <img src="http://emojione.com/wp-content/uploads/assets/emojis/1f60a.svg"
+                             alt="happy face" class="small-icon"></p>
 </div>
