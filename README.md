@@ -2,6 +2,10 @@
 
 This readme is a work in process.
 
+## Notes
+
+This project is being reworked, refactored, polished and cleaned.
+
 ## Requirements
 
 1. Node.js

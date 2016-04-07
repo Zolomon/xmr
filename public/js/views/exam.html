@@ -8,7 +8,7 @@
 
     <ul class="no-dots-list">
         <li class="bot7" ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
-            # <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">{{problem.index + 1}}</a> {{problem.TagLinks.length > 0 ? ':' : ''}}
+            <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">Problem {{problem.index + 1}}</a> {{problem.TagLinks.length > 0 ? ':' : ''}}
             <span class="shaded" ng-if="problem.TagLinks.length == 0">- Not tagged yet</span>
             <span ng-if="problem.TagLinks.length > 0" ng-repeat="taglink in problem.TagLinks">
                 <a class="tag-border-md" href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>

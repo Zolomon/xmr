@@ -12,14 +12,12 @@ var xmr = require('./libxmr.js');
 var _  = require('lodash');
 require('console-stamp')(console, {pattern: 'yyyy-mm-dd HH:MM:ss.l'});
 
-//xmr.findProblem({where: {id: 329}}).then(x => console.log(x));
-
 var server = jayson.server({
 
     getExam: (course_id, exam_id, callback) =>
         {        var inclusion = include.Courses();
                  inclusion[0].where = {id: exam_id};
-                 
+
                  xmr.findCourse({where: {id: course_id}, include: inclusion})
                  .then(course => callback(null, course))
                  .catch(err => {
@@ -29,8 +27,8 @@ var server = jayson.server({
         }
     ,
 
-    getExams: (courseId, callback) => 
-        xmr.findAllExams({where: {courseId: courseId}, include: include.Exams()})            
+    getExams: (courseId, callback) =>
+        xmr.findAllExams({where: {courseId: courseId}, include: include.Exams()})
         .then(exams => callback(null, exams))
         .catch(err => {
             console.log(err);
@@ -38,7 +36,7 @@ var server = jayson.server({
         })
             ,
 
-    getCourse: (id, callback) =>         
+    getCourse: (id, callback) =>
         xmr.findCourse({where: {id: id}, include: include.Courses()})
         .then(course => callback(null, course))
         .catch(err => {
@@ -64,14 +62,14 @@ var server = jayson.server({
                   callback(null, courses)
                  )
             .catch(err => {
-                console.log(err); 
+                console.log(err);
                 callback(err);
             });
     },
 
     getProblemsWithTag: (tag_slug, callback) =>   {
         var inclusion = include.Courses();
-        inclusion[0].include[0].include[2].include[0].where = {slug: tag_slug}; 
+        inclusion[0].include[0].include[2].include[0].where = {slug: tag_slug};
         var resultCourse =
             xmr.findAllCourses({include: inclusion})
             .catch(err => {
@@ -79,8 +77,8 @@ var server = jayson.server({
                 callback(err);
             });
 
-        
-        
+
+
         var resultTag = xmr.findTag({where: {
             slug: tag_slug
         }}).catch(err => {
@@ -89,16 +87,16 @@ var server = jayson.server({
         });
 
         var result = Promise.all([resultCourse, resultTag]);
-        
+
         result.then(data => {
-            
+
             var result = {
                 course: data[0],
                 tag: data[1]
             };
 
             var problems = [];
-            result.course[0].Exams.forEach(e => {                
+            result.course[0].Exams.forEach(e => {
                 e.Problems.forEach(p => {
                     problems.push(p.id);
                 });
@@ -106,7 +104,7 @@ var server = jayson.server({
 
             var problemInclusion = include.Courses();
             problemInclusion[0].include[0].where = {id: { $or: problems}};
-            
+
             var resultProblems =
                 xmr.findAllCourses({include: problemInclusion})
                 .catch(err => {
@@ -114,7 +112,7 @@ var server = jayson.server({
                     callback(err);
                 }).then(course => {
                     result.problems = course;
-                    
+
                     callback(null, result);
                 });
         }).catch(err => {
@@ -128,11 +126,11 @@ var server = jayson.server({
         includeWhere[0].include[0].where = {id: id};
 
 		console.log();
-        
+
         xmr.findAllCourses({
             include: includeWhere
-        })        
-            .then(problem => {                
+        })
+            .then(problem => {
                 console.log('Getting problem: ' + problem[0]);
                 callback (null, problem[0]);
             })
@@ -142,7 +140,7 @@ var server = jayson.server({
             });
     },
 
-    updateTag: (id, tag, callback) => 
+    updateTag: (id, tag, callback) =>
         xmr.updateTag({
             title: tag.title,
             slug: slugify(tag.title),
@@ -154,7 +152,7 @@ var server = jayson.server({
         })
         .then(result => callback(null, result))
     ,
-    destroyTagLink: (id, callback) => 
+    destroyTagLink: (id, callback) =>
         xmr.destroyTagLink({where: {id: id}})
         .then(result => callback(null, {}))
     ,
@@ -171,7 +169,7 @@ var server = jayson.server({
     },
 
     getTagsFromCourse: (course_id, callback) => {
-        var includeWhere = include.Courses();        
+        var includeWhere = include.Courses();
         xmr.findCourse({where: {id: course_id},
                         include: includeWhere})
             .then(course => {
@@ -190,8 +188,8 @@ var server = jayson.server({
                         }
                     }
                 }
-                
-                callback(null, tags);                
+
+                callback(null, tags);
             })
             .catch(err => {
                 console.log(err);
