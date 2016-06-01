@@ -48,3 +48,9 @@ fake01
         ├── 4.png
         └── 5.png
 ```
+# TODO
+* Feature to create example exam with questions
+* Add prediction of tags for next exam
+* Add `Has Solution` flag and show in UI
+* Add navbar and breadcrumb
+* Add users, main feature is "I have solved this problem"

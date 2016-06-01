@@ -10,10 +10,12 @@ var express = require('express'),
     env = process.env.NODE_ENV || 'development',
     config = require('./config/config.json')[env],
     index = require('./routes/index'),
-    
+    helmet = require('helmet'),
+
     app = express();
 
 //app.use(logger('[:mydate] :method :url :status :res[content-length] - :remote-addr - :response-time ms'));
+app.use(helmet());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

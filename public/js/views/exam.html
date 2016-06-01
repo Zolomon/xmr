@@ -14,6 +14,12 @@
                 <a class="tag-border-md" href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
                 <!-- {{$last ? '' : ', '}} -->
             </span>
+            <span class="shaded" ng-if="problem.Answer.isSolution">
+              Solution
+            </span>
+            <span class="shaded" ng-if="!problem.Answer.isSolution">
+              Answer
+            </span>
         </li>
     </ul>
 </div>

@@ -3,7 +3,8 @@
 
     module.exports = function(sequelize, DataTypes) {
         var Answer = sequelize.define('Answer', {
-            filename: DataTypes.STRING
+          filename: DataTypes.STRING,
+          isSolution: DataTypes.BOOLEAN
         }, {
             classMethods: {
                 associate: function(models) {

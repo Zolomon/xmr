@@ -1,101 +1,112 @@
 <!doctype html>
 <html lang="en" ng-app="xmr">
-    <head>
-        <title>Xmr</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <head>
+    <title>Xmr</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
-        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./css/main.css">
-        <link rel="stylesheet" href="./css/custom.css">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,900,400italic,500,500italic,700italic,900italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-        <meta name="viewport" content="initial-scale=1" />
-    </head>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,900,400italic,500,500italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <meta name="viewport" content="initial-scale=1" />
+  </head>
 
-    <body layout="column">
-        <header class="site-header">
-            <div class="wrapper">
-                <a class="site-title" href="/#/courses">Xmr</a>
-                <nav class="site-nav">
-                    <a href="#" class="menu-icon">
-                        <svg viewBox="0 0 18 15">
-                            <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
-                            <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
-                            <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
-                        </svg>
-                    </a>
+  <body layout="column">
+    <header class="site-header">
+      <div class="wrapper">
+        <a class="site-title" href="/#/courses">Xmr</a>
+        <nav class="site-nav">
+          <a href="#" class="menu-icon">
+            <svg viewBox="0 0 18 15">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </a>
 
-                    <!-- <div class="trigger">
-                         <small>Menu:</small>
-                         <a class="page-link" href="/#/courses">Courses</a>
-                         </div> -->
-                </nav>
+          <!-- <div class="trigger">
+               <small>Menu:</small>
+               <a class="page-link" href="/#/courses">Courses</a>
+          </div> -->
+        </nav>
+      </div>
+    </header>
+
+    <div class="container top15">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- <div>
+               <a href="#/main">Home</a>
+               <a href="#/courses">Courses</a>
+          </div> -->
+
+          <!-- <h1>XMR</h1> -->
+
+          <div ng-cloak>
+            <div ng-view>
             </div>
-        </header>
-
-        <div class="container top15">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- <div>
-                         <a href="#/main">Home</a>
-                         <a href="#/courses">Courses</a>
-                         </div> -->
-
-                    <!-- <h1>XMR</h1> -->
-
-                    <div ng-cloak>
-                        <div ng-view>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="footer top30">
-                <p>
-                    <small>
-                        Contact me at:
-                        <a href="mailto:zolomon@gmail.com">zolomon@gmail.com</a>, if you have feedback or requests to add courses.
-                    </small>
-                    <br />
-                    <small>
-                        Source code at:
-                        <a href="https://github.com/Zolomon/xmr">Github.com/Zolomon/xmr</a>.
-                        I'm
-                        working on a faster version, want to help me out?
-                    </small>
-                    <br />
-                    <small>
-                      Make my day! <a href="swish://">Swish a surprise coffee
-                        <img src="http://emojione.com/wp-content/uploads/assets/emojis/2615.svg"
-                             alt="hot beverage" class="small-icon">
-                        to me at
-                      </a>&nbsp;0761677760 !
-                      <img src="http://emojione.com/wp-content/uploads/assets/emojis/1f60a.svg"
-                           alt="happy face" class="small-icon">
-                    </small>
-                </p>
-                <p>&copy; 2015 Bengt Ericsson → <small>All problem questions are owned by Lunds Tekniska H&ouml;gskola</small></p>
-            </footer>
+          </div>
         </div>
+      </div>
 
-        <script src="./angular/angular.js"></script>
-        <script src="./angular-animate/angular-animate.js"></script>
-        <script src="./angular-aria/angular-aria.js"></script>
-        <script src="./angular-route/angular-route.js"></script>
-        <script src="./angular-filter/angular-filter.js"></script>
+      <footer class="footer top30">
+        <p>
+          <small>
+            Contact me at:
+            <a href="mailto:zolomon@gmail.com">zolomon@gmail.com</a>, if you have feedback or requests to add courses.
+          </small>
+          <br />
+          <small>
+            Source code at:
+            <a href="https://github.com/Zolomon/xmr">Github.com/Zolomon/xmr</a>.
+            I'm
+            working on a faster version, want to help me out?
+          </small>
+          <br />
+          <small>
+            Make my day! <a href="swish://">Swish a surprise coffee
+              <img src="http://emojione.com/wp-content/uploads/assets/emojis/2615.svg"
+                   alt="hot beverage" class="small-icon">
+              to me at
+            </a>&nbsp;0761677760
+            <img src="http://emojione.com/wp-content/uploads/assets/emojis/1f60a.svg"
+                 alt="happy face" class="small-icon">
+          </small>
+        </p>
+        <p>&copy; 2015 Bengt Ericsson → <small>All problem questions are owned by Lunds Tekniska H&ouml;gskola</small></p>
+      </footer>
+    </div>
+
+    <script src="./angular/angular.js"></script>
+    <script src="./angular-animate/angular-animate.js"></script>
+    <script src="./angular-aria/angular-aria.js"></script>
+    <script src="./angular-route/angular-route.js"></script>
+    <script src="./angular-filter/angular-filter.js"></script>
 
 
-        <script src="./jquery/jquery.min.js"></script>
-        <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./jquery/jquery.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
-        <script src="/js/app.js"></script>
-        <script src="/js/CourseController.js"></script>
-        <script src="/js/ExamController.js"></script>
-        <script src="/js/TagController.js"></script>
-        <script src="/js/ProblemController.js"></script>
-        <script src="/js/xmr.js"></script>
-    </body>
+    <script src="/js/app.js"></script>
+    <script src="/js/CourseController.js"></script>
+    <script src="/js/ExamController.js"></script>
+    <script src="/js/TagController.js"></script>
+    <script src="/js/ProblemController.js"></script>
+    <script src="/js/xmr.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76142125-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
 </html>
