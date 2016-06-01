@@ -32,6 +32,12 @@
                 <a class="tag-border-md {{taglink.Tag.slug == data.tag.slug ? 'highlighted' : ''}}"
                    href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
             </span>
+            <span class="shaded" ng-if="problem.Answer.isSolution">
+              Solution
+            </span>
+            <span class="shaded" ng-if="!problem.Answer.isSolution">
+              Answer
+            </span>
         </li>
     </ul>
 </div>

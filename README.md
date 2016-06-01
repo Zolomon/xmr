@@ -51,6 +51,8 @@ fake01
 # TODO
 * Feature to create example exam with questions
 * Add prediction of tags for next exam
-* Add `Has Solution` flag and show in UI
+* [x] Add `Has Solution` flag and show in UI
 * Add navbar and breadcrumb
 * Add users, main feature is "I have solved this problem"
+* Add navigation to next problem in exam, next problem in tag, and random next problem in exam (with solution?)
+* Add GitHub connection and load in commits to news
