@@ -1,25 +1,29 @@
-<a href="#/courses">Courses</a>
+<!-- <a href="#/courses">Courses</a> -->
 
-<h2>{{course.name}} → <smaller class="shaded">{{course.code}}<smaller></h2>
+<ol class="breadcrumb">
+  <li><a href="#/courses">Courses</a></li>
+  <li><a href="#/courses/{{course.id}}">{{course.name}}</a> → <smaller class="shaded">{{course.code}}<smaller></li>
+</ol>
 
-    <div class="float_left right30">
-        <h3>Exams <small class="shaded">Select an exam, or </small></h3>
-        <ol>
-            <li ng-repeat="exam in course.Exams | orderBy: '-code'">
-                <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
-                    {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
-                </a>
-                <small class="shaded" ng-if="isSolution(exam)">*</small>
-                <small class="shaded" ng-if="isMissingTags(exam)">({{nbrOfProblemsWithoutTags(exam)}} p. left)</small>
-            </li>
-        </ol>
-    </div>
 
-    <div class="float_left">
-        <h3>Tags <small class="shaded">Select a tag</small></h3>
-        <ul class="list-unstyled">
-            <li class="bot10" ng-repeat="tag in tagLinks">
-                <a class="tag-border-md" href="#/tags/{{tag[0].Tag.slug}}">{{tag[0].Tag.title}}</a> <span>{{tag.length}}</span>
-            </li>
-        </ul>
-    </div>
+<div class="float_left right30">
+  <h3>Exams <small class="shaded">Select an exam, or </small></h3>
+  <ol>
+    <li ng-repeat="exam in course.Exams | orderBy: '-code'">
+      <a href="#/courses/{{course.id}}/exams/{{exam.id}}">
+        {{toDate(exam.code) | date: 'yyyy-MM-dd'}}
+      </a>
+      <small class="shaded" ng-if="isSolution(exam)">*</small>
+      <small class="shaded" ng-if="isMissingTags(exam)">({{nbrOfProblemsWithoutTags(exam)}} p. left)</small>
+    </li>
+  </ol>
+</div>
+
+<div class="float_left">
+  <h3>Tags <small class="shaded">Select a tag</small></h3>
+  <ul class="list-unstyled">
+    <li class="bot10" ng-repeat="tag in tagLinks">
+      <a class="tag-border-md" href="#/tags/{{tag[0].Tag.slug}}">{{tag[0].Tag.title}}</a> <span>{{tag.length}}</span>
+    </li>
+  </ul>
+</div>

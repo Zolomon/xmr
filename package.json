@@ -11,6 +11,7 @@
     "angular-filter": "^0.5.8",
     "angular-material": "^0.11.2",
     "angular-route": "^1.4.7",
+    "angular-ui-router": "^0.3.0",
     "bluebird": "^3.0.5",
     "body-parser": "^1.14.0",
     "bootstrap": "^3.3.6",

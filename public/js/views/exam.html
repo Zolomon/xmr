@@ -1,25 +1,28 @@
-<a href="#/courses">Courses</a> →
-<a href="#/courses/{{course.id}}">{{course.name}}</a>
+<ol class="breadcrumb">
+  <li><a href="#/courses">Courses</a></li>
+  <li><a href="#/courses/{{course.id}}">{{course.name}}</a></li>
+  <li><a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}">{{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</a></li>
+</ol>
 
-<h2><smaller class="shaded">{{course.name}}</smaller> → {{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</h2>
+<h2></h2>
 
 <div class="float_left">
-    <h3>Problems <small class="shaded">Select a problem</small></h3>
+  <h3>Problems <small class="shaded">Select a problem</small></h3>
 
-    <ul class="no-dots-list">
-        <li class="bot7" ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
-            <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">Problem {{problem.index + 1}}</a> {{problem.TagLinks.length > 0 ? ':' : ''}}
-            <span class="shaded" ng-if="problem.TagLinks.length == 0">- Not tagged yet</span>
-            <span ng-if="problem.TagLinks.length > 0" ng-repeat="taglink in problem.TagLinks">
-                <a class="tag-border-md" href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
-                <!-- {{$last ? '' : ', '}} -->
-            </span>
-            <span class="shaded" ng-if="problem.Answer.isSolution">
-              Solution
-            </span>
-            <span class="shaded" ng-if="!problem.Answer.isSolution">
-              Answer
-            </span>
-        </li>
-    </ul>
+  <ul class="no-dots-list">
+    <li class="bot7" ng-repeat="problem in course.Exams[0].Problems | orderBy: 'index'">
+      <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{problem.id}}">Problem {{problem.index + 1}}</a> {{problem.TagLinks.length > 0 ? ':' : ''}}
+      <span class="shaded" ng-if="problem.TagLinks.length == 0">- Not tagged yet</span>
+      <span ng-if="problem.TagLinks.length > 0" ng-repeat="taglink in problem.TagLinks">
+        <a class="tag-border-md" href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
+        <!-- {{$last ? '' : ', '}} -->
+      </span>
+      <span class="shaded" ng-if="problem.Answer.isSolution">
+        Solution
+      </span>
+      <span class="shaded" ng-if="!problem.Answer.isSolution">
+        Answer
+      </span>
+    </li>
+  </ul>
 </div>

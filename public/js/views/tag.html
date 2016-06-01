@@ -1,4 +1,7 @@
-<a href="#/courses/{{data.course[0].id}}">{{data.course[0].name}}</a>
+<ol class="breadcrumb">
+  <li><a href="#/courses">Courses</a></li>
+  <li><a href="#/courses/{{data.course[0].id}}">{{data.course[0].name}}</a></li>
+</ol>
 
 <h2>{{tag.tag.title}}</h2>
 
@@ -9,7 +12,7 @@
         Update name
     </button>
     <div class="form-group form-group-sm">
-        <label class="sr-only" for="tagTitle">Tag title: </label>        
+        <label class="sr-only" for="tagTitle">Tag title: </label>
         <input class="form-control" type="text" id="tagTitle" ng-model="tag.tag.title">
     </div>
 
@@ -30,7 +33,5 @@
                    href="#/tags/{{taglink.Tag.slug}}">{{taglink.title}}</a>
             </span>
         </li>
-    </ul>    
+    </ul>
 </div>
-
-

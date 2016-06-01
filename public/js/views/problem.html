@@ -1,8 +1,15 @@
-<a href="#/courses">Courses</a> →
-<a href="#/courses/{{course.id}}">{{course.name}}</a> →
-<a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}">{{course.Exams[0].code}}</a>
+<ol class="breadcrumb">
+  <li><a href="#/courses">Courses</a></li>
+  <li><a href="#/courses/{{course.id}}">{{course.name}}</a></li>
+  <li><a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}">{{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</a></li>
+  <li><a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}/problems/{{course.Exams[0].Problems[0].id}}"> Problem {{course.Exams[0].Problems[0].index + 1}}</a></li>
+</ol>
 
-<h2><smaller class="shaded">{{course.code}} → {{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</smaller> → Problem {{course.Exams[0].Problems[0].index + 1}}</h2>
+<!-- <a href="#/courses">Courses</a> →
+     <a href="#/courses/{{course.id}}">{{course.name}}</a> →
+     <a href="#/courses/{{course.id}}/exams/{{course.Exams[0].id}}">{{course.Exams[0].code}}</a> -->
+
+<!-- <h2><smaller class="shaded">{{course.code}} → {{toDate(course.Exams[0].code) | date: 'yyyy-MM-dd'}}</smaller> → Problem {{course.Exams[0].Problems[0].index + 1}}</h2> -->
 
 <div ng-if="course.Exams[0].Problems[0].TagLinks.length > 0">
     <h4>Tags:</h4>
